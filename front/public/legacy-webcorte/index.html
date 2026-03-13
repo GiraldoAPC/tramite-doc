@@ -634,10 +634,18 @@
         }
 
         .hero-cta {
-            min-width: 188px;
-            min-height: 46px;
+            min-width: 174px;
+            min-height: 42px;
+            padding: 9px 12px;
+            font-size: 13px;
+            font-weight: 600;
             justify-content: center;
             box-shadow: 0 10px 24px rgba(0, 0, 0, .16);
+        }
+
+        .hero-cta i {
+            font-size: 14px;
+            opacity: .92;
         }
 
         /* ---------------- SECTIONS ---------------- */
@@ -1833,9 +1841,18 @@
                         Administramos procesos arbitrales desde el 29 de septiembre de 2015, contribuyendo a decisiones que ayudan a resolver conflictos entre las partes.
                     </p>
                     <div class="cta-row">
-                        <a class="btn btn-primary hero-cta" href="#" title="Enlace real: Ingreso de solicitudes">Ingreso de Solicitudes</a>
-                        <a class="btn btn-accent hero-cta" href="#" title="Enlace real: Ingreso de escritos">Ingreso de Escritos</a>
-                        <a class="btn btn-outline hero-cta" href="#" title="Enlace real: Revisión de expedientes">Revisión de Expedientes</a>
+                        <a class="btn btn-primary hero-cta" href="/registro" target="_blank" rel="noopener noreferrer" title="Iniciar solicitud arbitral">
+                            <i class="fa-regular fa-folder-open" aria-hidden="true"></i>
+                            <span>Solicitud de Inicio Arbitral</span>
+                        </a>
+                        <a class="btn btn-accent hero-cta" href="/acceso" target="_blank" rel="noopener noreferrer" title="Ingresar para presentar escritos">
+                            <i class="fa-regular fa-pen-to-square" aria-hidden="true"></i>
+                            <span>Presentacion de Escritos</span>
+                        </a>
+                        <a class="btn btn-outline hero-cta" href="/?seguimiento=1" target="_top" title="Consultar seguimiento del expediente">
+                            <i class="fa-solid fa-folder-tree" aria-hidden="true"></i>
+                            <span>Seguimiento de Expediente</span>
+                        </a>
                     </div>
                 </div>
             </div>

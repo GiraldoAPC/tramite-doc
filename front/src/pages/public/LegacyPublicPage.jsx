@@ -84,6 +84,11 @@ export default function LegacyPublicPage({ src, title }) {
       body > footer {
         display: none !important;
       }
+      .container {
+        width: min(var(--container, 1440px), 90%) !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
       html, body {
         overflow: hidden !important;
       }

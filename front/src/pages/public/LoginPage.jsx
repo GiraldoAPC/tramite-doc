@@ -6,27 +6,38 @@ export default function LoginPage() {
       <div className="public-shell auth-page__shell">
         <div className="auth-card">
           <div className="auth-card__head">
-            <p className="auth-card__eyebrow">Acceso al sistema</p>
+            <p className="auth-card__eyebrow">Panel arbitral</p>
             <h2>Ingresar</h2>
             <p>
-              Accede al panel de trámite documentario y servicios internos.
+              Accede al panel para revisar expedientes, actuaciones,
+              notificaciones y tramites vinculados al proceso arbitral.
             </p>
           </div>
 
-          <form className="auth-form" onSubmit={(e) => e.preventDefault()}>
+          <form className="auth-form" onSubmit={(event) => event.preventDefault()}>
             <label>
-              Correo electrónico
+              Correo electronico
               <span className="auth-input">
                 <i className="fa-solid fa-envelope" aria-hidden="true" />
-                <input type="email" placeholder="usuario@dominio.com" />
+                <input
+                  type="email"
+                  name="correo"
+                  placeholder="usuario@dominio.com"
+                  required
+                />
               </span>
             </label>
 
             <label>
-              Contraseña
+              Contrasena
               <span className="auth-input">
                 <i className="fa-solid fa-lock" aria-hidden="true" />
-                <input type="password" placeholder="••••••••" />
+                <input
+                  type="password"
+                  name="contrasena"
+                  placeholder="Ingrese su contrasena"
+                  required
+                />
               </span>
             </label>
 
@@ -37,7 +48,8 @@ export default function LoginPage() {
           </form>
 
           <p className="auth-card__foot">
-            ¿No tienes cuenta? <Link to="/registro">Regístrate aquí</Link>
+            Necesitas presentar una solicitud?{" "}
+            <Link to="/registro">Inicia una nueva solicitud aqui</Link>
           </p>
         </div>
       </div>

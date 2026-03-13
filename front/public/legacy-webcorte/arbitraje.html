@@ -91,7 +91,7 @@
                 <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-solicitudes">
                     <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-folder-open"></i></span>
                     <div class="service-card__body">
-                        <h3>Ingreso de solicitudes</h3>
+                        <h3>Solicitud de inicio arbitral</h3>
                         <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
                     </div>
                 </button>
@@ -99,7 +99,7 @@
                 <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-escritos">
                     <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-pen-to-square"></i></span>
                     <div class="service-card__body">
-                        <h3>Ingreso de escritos</h3>
+                        <h3>Presentacion de escritos</h3>
                         <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
                     </div>
                 </button>
@@ -107,7 +107,7 @@
                 <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-expedientes">
                     <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-folder-tree"></i></span>
                     <div class="service-card__body">
-                        <h3>Revision de expedientes</h3>
+                        <h3>Seguimiento de expediente</h3>
                         <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
                     </div>
                 </button>
@@ -169,19 +169,20 @@
             <div class="modal__head">
                 <div>
                     <p class="modal__eyebrow">Servicio arbitral</p>
-                    <h3>Ingreso de solicitudes</h3>
+                    <h3>Solicitud de inicio arbitral</h3>
                 </div>
                 <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
             </div>
             <div class="modal__body">
-                <p>Seleccione la modalidad de atencion para registrar su solicitud arbitral. Puede iniciar el tramite por via publica o ingresar con credenciales si ya cuenta con acceso institucional.</p>
+                <p>El proceso arbitral inicia con la presentacion de la Solicitud de Inicio de Arbitraje. La Corte revisa los requisitos minimos, valida la documentacion y luego asigna numero de expediente.</p>
                 <ul class="modal__list">
-                    <li>Registro publico para usuarios que todavia no cuentan con cuenta institucional.</li>
-                    <li>Acceso autenticado para seguimiento y envio de documentacion complementaria.</li>
+                    <li>Formulario base FO-ARB-04 para registrar la solicitud arbitral.</li>
+                    <li>Validacion de representante, partes, convenio arbitral y anexos.</li>
+                    <li>Si ya tiene acceso, puede ingresar para revisar o complementar informacion.</li>
                 </ul>
                 <div class="modal__actions">
-                    <a class="btn btn-primary" href="/registro" target="_top">Ingreso publico</a>
-                    <a class="btn btn-outline" href="/acceso" target="_top">Ingresar</a>
+                    <a class="btn btn-primary" href="/registro" target="_blank" rel="noopener noreferrer">Nueva solicitud</a>
+                    <a class="btn btn-outline" href="/acceso" target="_blank" rel="noopener noreferrer">Ingresar</a>
                 </div>
             </div>
         </div>
@@ -193,19 +194,18 @@
             <div class="modal__head">
                 <div>
                     <p class="modal__eyebrow">Servicio arbitral</p>
-                    <h3>Ingreso de escritos</h3>
+                    <h3>Presentacion de escritos</h3>
                 </div>
                 <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
             </div>
             <div class="modal__body">
-                <p>Este acceso permite presentar escritos y anexos relacionados con procesos arbitrales. Puede hacerlo por la via publica o mediante autenticacion de usuario registrado.</p>
+                <p>Este acceso esta orientado a las partes que ya cuentan con un proceso arbitral en tramite y requieren presentar escritos, anexos u otra documentacion complementaria dentro del expediente.</p>
                 <ul class="modal__list">
-                    <li>Presentacion publica para envios puntuales y registros iniciales.</li>
-                    <li>Ingreso autenticado para control, trazabilidad y revision de documentacion enviada.</li>
+                    <li>Uso posterior a la admision de la solicitud y registro del expediente.</li>
+                    <li>Permite mantener trazabilidad y control documental sobre cada actuacion.</li>
                 </ul>
                 <div class="modal__actions">
-                    <a class="btn btn-primary" href="/registro" target="_top">Ingreso publico</a>
-                    <a class="btn btn-outline" href="/acceso" target="_top">Ingresar</a>
+                    <a class="btn btn-primary" href="/acceso" target="_blank" rel="noopener noreferrer">Ingresar al panel</a>
                 </div>
             </div>
         </div>
@@ -217,19 +217,19 @@
             <div class="modal__head">
                 <div>
                     <p class="modal__eyebrow">Consulta institucional</p>
-                    <h3>Revision de expedientes</h3>
+                    <h3>Seguimiento de expediente</h3>
                 </div>
                 <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
             </div>
             <div class="modal__body">
-                <p>El modulo de revision de expedientes permite consultar el estado del tramite arbitral, verificar actuaciones registradas y acceder al seguimiento institucional del expediente.</p>
+                <p>Consulte el estado del expediente arbitral, verifique la etapa del tramite y revise el control institucional de actuaciones registradas.</p>
                 <ul class="modal__list">
-                    <li>Consulta del estado general del expediente.</li>
-                    <li>Verificacion de movimientos y actuaciones registradas.</li>
-                    <li>Acceso mediante credenciales para mayor detalle del tramite.</li>
+                    <li>Busqueda por numero de expediente, documento y correo registrado.</li>
+                    <li>Consulta del estado general del expediente y etapa procesal.</li>
+                    <li>Referencia base para el modulo de seguimiento institucional.</li>
                 </ul>
                 <div class="modal__actions">
-                    <a class="btn btn-primary" href="/acceso" target="_top">Revisar expediente</a>
+                    <a class="btn btn-primary" href="/?seguimiento=1" target="_top">Abrir seguimiento</a>
                 </div>
             </div>
         </div>
@@ -269,16 +269,24 @@
             <div class="modal__body">
                 <p>Descargue los reglamentos institucionales disponibles de la Corte de Arbitraje.</p>
                 <div class="modal__downloads">
-                    <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%2032069.pdf" target="_blank" rel="noopener noreferrer">
-                        <strong>Reglamento 32069</strong>
+                    <a class="modal__download" href="/documentos/reglamentos/CODIGO%20DE%20ETICA.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>CODIGO DE ETICA</strong>
                         <span>PDF</span>
                     </a>
-                    <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%20ANTERIOR.pdf" target="_blank" rel="noopener noreferrer">
-                        <strong>Reglamento anterior</strong>
+                    <a class="modal__download" href="/documentos/reglamentos/DECRETO%20LEGISLATIVO%201071.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>DECRETO LEGISLATIVO 1071</strong>
+                        <span>PDF</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/reglamentos/ESTATUTO.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>ESTATUTO</strong>
+                        <span>PDF</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%202015.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>REGLAMENTO 2015</strong>
                         <span>PDF</span>
                     </a>
                     <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%20ARBITRAL%2005-03-2025.pdf" target="_blank" rel="noopener noreferrer">
-                        <strong>Reglamento arbitral 05-03-2025</strong>
+                        <strong>REGLAMENTO ARBITRAL 05-03-2025</strong>
                         <span>PDF</span>
                     </a>
                 </div>
