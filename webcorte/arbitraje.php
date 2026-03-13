@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Arbitraje | Corte Superior de Arbitraje - CCITA</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/arbitraje.css" />
+</head>
+
+<body>
+    <div class="topbar">
+        <div class="container">
+            <div class="inner">
+                <div class="meta">
+                    <span class="pill">Jr. Jose de Sucre 765 - 3er Piso, Huaraz - Ancash</span>
+                    <span class="pill">972 495 162</span>
+                    <span class="pill">secretariageneralcaa@camaradeancash.org.pe</span>
+                </div>
+                <div class="pill">Corte Superior de Arbitraje - CCITA</div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <div class="nav">
+                <a class="brand" href="#inicio" aria-label="Inicio">
+                    <div class="logo">
+                        <img src="LOGOCORTE.png" alt="Logo Corte de Arbitraje" onerror="this.style.display='none';this.parentElement.textContent='CA';" />
+                    </div>
+                    <div class="txt">
+                        <div class="t1">Corte Superior de Arbitraje</div>
+                        <div class="t2">Camara de Comercio de Ancash</div>
+                    </div>
+                </a>
+
+                <nav aria-label="Navegacion principal">
+                    <ul>
+                        <li><a href="index.php">Inicio</a></li>
+                        <li><a href="organizacion.php">Organizacion</a></li>
+                        <li><a href="arbitraje.php">Arbitraje</a></li>
+                    </ul>
+                </nav>
+
+                <div class="actions">
+                    <a class="btn btn-outline" href="/registro" target="_top">Registrarse</a>
+                    <a class="btn btn-primary" href="/acceso" target="_top">Ingresar</a>
+                    <button class="burger" id="burger" aria-label="Abrir menu"><span></span></button>
+                </div>
+            </div>
+
+            <div class="mobile" id="mobileMenu">
+                <a href="index.php">Inicio</a>
+                <a href="organizacion.php">Organizacion</a>
+                <a href="arbitraje.php">Arbitraje</a>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="hero-bg" style="background-image:url('assets/img/hero-arbitraje.jpg')"></div>
+        <div class="hero-overlay"></div>
+        <div class="container hero-inner">
+            <div class="crumbs reveal">
+                <a href="index.php">Inicio</a> <span class="sep">/</span> <span>Arbitraje</span>
+            </div>
+            <h1 class="reveal">Arbitraje</h1>
+            <p class="lead reveal">Servicios, accesos institucionales y recursos de consulta de la Corte de Arbitraje, organizados en un entorno claro y profesional.</p>
+            <div class="hero-actions reveal">
+                <a class="btn btn-primary" href="#accesos">Ver servicios</a>
+                <a class="btn btn-outline" href="/nomina-arbitros" target="_top">Nomina de arbitros</a>
+            </div>
+        </div>
+        <div class="wave" aria-hidden="true">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,80 C240,120 480,20 720,60 C960,100 1200,40 1440,70 L1440,120 L0,120 Z"></path>
+            </svg>
+        </div>
+    </section>
+
+    <section class="section services" id="accesos">
+        <div class="container">
+            <div class="section-head reveal">
+                <h2>Servicios y enlaces arbitrales</h2>
+                <p>Acceda a los principales servicios institucionales de la Corte. Los ingresos operativos se presentan mediante modales y los recursos oficiales enlazan a sus paginas correspondientes.</p>
+            </div>
+
+            <div class="service-grid">
+                <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-solicitudes">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-folder-open"></i></span>
+                    <div class="service-card__body">
+                        <h3>Ingreso de solicitudes</h3>
+                        <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </button>
+
+                <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-escritos">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-pen-to-square"></i></span>
+                    <div class="service-card__body">
+                        <h3>Ingreso de escritos</h3>
+                        <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </button>
+
+                <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-expedientes">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-folder-tree"></i></span>
+                    <div class="service-card__body">
+                        <h3>Revision de expedientes</h3>
+                        <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </button>
+
+                <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-clausula">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-file-lines"></i></span>
+                    <div class="service-card__body">
+                        <h3>Clausula arbitral</h3>
+                        <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </button>
+
+                <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-reglamentos">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-bookmark"></i></span>
+                    <div class="service-card__body">
+                        <h3>Reglamentos</h3>
+                        <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </button>
+
+                <a class="service-card reveal" href="/nomina-arbitros" target="_top">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-scale-balanced"></i></span>
+                    <div class="service-card__body">
+                        <h3>Nomina de arbitros</h3>
+                        <p>Ir a la pagina <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </a>
+
+                <a class="service-card reveal" href="/tarifario-virtual" target="_top">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-calculator"></i></span>
+                    <div class="service-card__body">
+                        <h3>Tarifario virtual</h3>
+                        <p>Ir a la pagina <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </a>
+
+                <button class="service-card reveal btn-soft" type="button" data-modal-open="modal-incorporacion">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-regular fa-id-card"></i></span>
+                    <div class="service-card__body">
+                        <h3>Solicitud de incorporacion</h3>
+                        <p>Abrir modal <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </button>
+
+                <a class="service-card reveal" href="/comunicados" target="_top">
+                    <span class="service-card__icon" aria-hidden="true"><i class="fa-solid fa-bullhorn"></i></span>
+                    <div class="service-card__body">
+                        <h3>Comunicados</h3>
+                        <p>Ir a la pagina <i class="fa-solid fa-arrow-right"></i></p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal" id="modal-solicitudes" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Servicio arbitral</p>
+                    <h3>Ingreso de solicitudes</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>Seleccione la modalidad de atencion para registrar su solicitud arbitral. Puede iniciar el tramite por via publica o ingresar con credenciales si ya cuenta con acceso institucional.</p>
+                <ul class="modal__list">
+                    <li>Registro publico para usuarios que todavia no cuentan con cuenta institucional.</li>
+                    <li>Acceso autenticado para seguimiento y envio de documentacion complementaria.</li>
+                </ul>
+                <div class="modal__actions">
+                    <a class="btn btn-primary" href="/registro" target="_top">Ingreso publico</a>
+                    <a class="btn btn-outline" href="/acceso" target="_top">Ingresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-escritos" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Servicio arbitral</p>
+                    <h3>Ingreso de escritos</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>Este acceso permite presentar escritos y anexos relacionados con procesos arbitrales. Puede hacerlo por la via publica o mediante autenticacion de usuario registrado.</p>
+                <ul class="modal__list">
+                    <li>Presentacion publica para envios puntuales y registros iniciales.</li>
+                    <li>Ingreso autenticado para control, trazabilidad y revision de documentacion enviada.</li>
+                </ul>
+                <div class="modal__actions">
+                    <a class="btn btn-primary" href="/registro" target="_top">Ingreso publico</a>
+                    <a class="btn btn-outline" href="/acceso" target="_top">Ingresar</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-expedientes" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Consulta institucional</p>
+                    <h3>Revision de expedientes</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>El modulo de revision de expedientes permite consultar el estado del tramite arbitral, verificar actuaciones registradas y acceder al seguimiento institucional del expediente.</p>
+                <ul class="modal__list">
+                    <li>Consulta del estado general del expediente.</li>
+                    <li>Verificacion de movimientos y actuaciones registradas.</li>
+                    <li>Acceso mediante credenciales para mayor detalle del tramite.</li>
+                </ul>
+                <div class="modal__actions">
+                    <a class="btn btn-primary" href="/acceso" target="_top">Revisar expediente</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-clausula" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Documento referencial</p>
+                    <h3>Clausula arbitral</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>Texto referencial para incluir en contratos y actos juridicos sujetos al arbitraje administrado por la Corte.</p>
+                <div class="modal__clause" id="clauseText">Todo litigio o controversia derivados o relacionados con este acto juridico sera resuelto mediante arbitraje de conformidad con los reglamentos arbitrales de la Corte de Arbitraje de la Camara de Comercio, Industria y Turismo de Ancash, a cuyas normas, administracion y decision se someten las partes y las aceptan en su integridad.</div>
+                <div class="modal__actions">
+                    <button class="btn btn-primary" id="copyClause" type="button">Copiar clausula</button>
+                    <a class="btn btn-outline" href="/reglamentos-directivos" target="_top">Ver reglamentos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-reglamentos" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Documentacion institucional</p>
+                    <h3>Reglamentos</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>Descargue los reglamentos institucionales disponibles de la Corte de Arbitraje.</p>
+                <div class="modal__downloads">
+                    <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%2032069.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>Reglamento 32069</strong>
+                        <span>PDF</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%20ANTERIOR.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>Reglamento anterior</strong>
+                        <span>PDF</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/reglamentos/REGLAMENTO%20ARBITRAL%2005-03-2025.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>Reglamento arbitral 05-03-2025</strong>
+                        <span>PDF</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal-incorporacion" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Servicio institucional</p>
+                    <h3>Solicitud de incorporacion</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>La solicitud de incorporacion permite iniciar el proceso de evaluacion institucional conforme a los criterios y lineamientos vigentes de la Corte.</p>
+                <div class="modal__downloads">
+                    <a class="modal__download" href="/documentos/solitud-incoproracion/DIRECTIVA%20-%20ARBITROS-CSAA.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>Directiva - Arbitros CSAA</strong>
+                        <span>PDF</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/solitud-incoproracion/FO-ARB-01%20Solicitud%20de%20Incorporaci%C3%B3n%20-%20Registro%20de%20%C3%81rbitros%20V.01.docx" target="_blank" rel="noopener noreferrer">
+                        <strong>FO-ARB-01 Solicitud de Incorporacion - Registro de Arbitros V.01</strong>
+                        <span>DOCX</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/solitud-incoproracion/FO-ARB-03%20Declaraci%C3%B3n%20Jurada%20-%20Registro%20de%20%C3%81rbitros%20V.01.docx" target="_blank" rel="noopener noreferrer">
+                        <strong>FO-ARB-03 Declaracion Jurada - Registro de Arbitros V.01</strong>
+                        <span>DOCX</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="foot">
+                <div style="display:flex; align-items:center; gap:10px">
+                    <span style="width:10px;height:10px;border-radius:3px;background:linear-gradient(135deg,var(--red-600),var(--orange-500));display:inline-block"></span>
+                    <span>&copy; <span id="year"></span> Corte Superior de Arbitraje - CCITA</span>
+                </div>
+                <div>Design by GIRALDO</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/arbitraje.js"></script>
+</body>
+
+</html>

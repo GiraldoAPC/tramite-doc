@@ -1,0 +1,511 @@
+﻿<!doctype html>
+<html lang="es">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Organización | Corte Superior de Arbitraje</title>
+
+    <!-- CSS -->
+
+    <link rel="stylesheet" href="assets/css/index.css" />
+    <style>
+        #organizacion.organization-clean {
+            padding: 68px 0 82px;
+            background: #f3f4f6;
+        }
+
+        #organizacion.organization-clean .section-head {
+            margin-bottom: 26px;
+        }
+
+        #organizacion.organization-clean .section-head h2 {
+            font-size: clamp(30px, 3vw, 42px);
+            font-weight: 500;
+            letter-spacing: -.04em;
+            color: #3f5575;
+        }
+
+        #organizacion.organization-clean .section-head p {
+            color: rgba(63, 85, 117, .78);
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 70ch;
+        }
+
+        .org-panel {
+            background: rgba(255, 255, 255, .94);
+            border: 1px solid rgba(210, 218, 229, .92);
+            border-radius: 28px;
+            padding: 28px;
+            box-shadow: 0 22px 48px rgba(15, 23, 42, .05);
+            transition: transform .24s ease, box-shadow .24s ease, border-color .24s ease;
+        }
+
+        .org-panel + .org-panel {
+            margin-top: 18px;
+        }
+
+        .org-panel:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 28px 52px rgba(15, 23, 42, .08);
+            border-color: rgba(231, 144, 24, .20);
+        }
+
+        .org-panel h3 {
+            margin: 0 0 14px;
+            font-size: 28px;
+            font-weight: 500;
+            letter-spacing: -.04em;
+            color: #3f5575;
+        }
+
+        .org-panel p,
+        .org-panel .muted {
+            color: rgba(63, 85, 117, .8);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .org-panel .muted:last-child {
+            margin-bottom: 0;
+        }
+
+        .org-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 14px;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(231, 144, 24, .10);
+            border: 1px solid rgba(231, 144, 24, .22);
+            color: #a85c0d;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .org-people {
+            display: grid;
+            grid-template-columns: repeat(5, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 24px;
+        }
+
+        .org-person {
+            overflow: hidden;
+            border-radius: 24px;
+            background: #fff;
+            border: 1px solid rgba(210, 218, 229, .92);
+            box-shadow: 0 14px 32px rgba(15, 23, 42, .05);
+            transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+        }
+
+        .org-person:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 22px 40px rgba(15, 23, 42, .08);
+            border-color: rgba(231, 144, 24, .22);
+        }
+
+        .org-person__media {
+            aspect-ratio: 1 / 1.08;
+            background:
+                linear-gradient(180deg, rgba(63, 85, 117, .05), rgba(63, 85, 117, .12)),
+                linear-gradient(135deg, rgba(231, 144, 24, .12), rgba(255, 255, 255, .6));
+            overflow: hidden;
+        }
+
+        .org-person__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .35s ease, filter .35s ease;
+        }
+
+        .org-person:hover .org-person__media img {
+            transform: scale(1.04);
+            filter: saturate(1.03);
+        }
+
+        .org-person__media--placeholder {
+            display: grid;
+            place-items: center;
+            color: #3f5575;
+            font-size: 40px;
+            font-weight: 500;
+            letter-spacing: -.04em;
+        }
+
+        .org-person__body {
+            padding: 18px 18px 20px;
+        }
+
+        .org-person__name {
+            margin: 0;
+            color: #3f5575;
+            font-size: 20px;
+            line-height: 1.35;
+            font-weight: 500;
+        }
+
+        .org-person__role {
+            margin: 10px 0 0;
+            color: #a85c0d;
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: .06em;
+            text-transform: uppercase;
+        }
+
+        .org-grid {
+            display: grid;
+            grid-template-columns: 1.1fr .9fr;
+            gap: 18px;
+            margin-top: 18px;
+        }
+
+        .org-list {
+            display: grid;
+            gap: 14px;
+            margin: 22px 0 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .org-list li {
+            display: grid;
+            grid-template-columns: 12px 1fr;
+            gap: 14px;
+            align-items: start;
+            color: rgba(63, 85, 117, .82);
+        }
+
+        .org-list li::before {
+            content: "";
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            margin-top: 7px;
+            background: linear-gradient(135deg, #db2328, #faa31a);
+            box-shadow: 0 0 0 6px rgba(250, 163, 26, .10);
+        }
+
+        .org-mini-card {
+            padding: 18px 18px 20px;
+            border-radius: 22px;
+            background: linear-gradient(180deg, rgba(63, 85, 117, .05), rgba(63, 85, 117, .08));
+            border: 1px solid rgba(210, 218, 229, .92);
+            transition: transform .22s ease, box-shadow .22s ease, border-color .22s ease;
+        }
+
+        .org-mini-card + .org-mini-card {
+            margin-top: 14px;
+        }
+
+        .org-mini-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 18px 34px rgba(15, 23, 42, .06);
+            border-color: rgba(231, 144, 24, .18);
+        }
+
+        .org-mini-card h4 {
+            margin: 0 0 8px;
+            color: #3f5575;
+            font-size: 20px;
+            font-weight: 500;
+            letter-spacing: -.03em;
+        }
+
+        .org-mini-card p {
+            margin: 0;
+            color: rgba(63, 85, 117, .78);
+            line-height: 1.75;
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity .72s ease, transform .72s ease;
+        }
+
+        .reveal.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: .08s;
+        }
+
+        .reveal-delay-2 {
+            transition-delay: .16s;
+        }
+
+        .reveal-delay-3 {
+            transition-delay: .24s;
+        }
+
+        @media (max-width: 1200px) {
+            .org-people {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 980px) {
+            #organizacion.organization-clean {
+                padding: 56px 0 68px;
+            }
+
+            .org-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .org-people {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 640px) {
+            .org-panel {
+                padding: 22px 18px;
+                border-radius: 22px;
+            }
+
+            .org-people {
+                grid-template-columns: 1fr;
+            }
+
+            .org-person__name {
+                font-size: 18px;
+            }
+        }
+    </style>
+
+    <!-- Favicon opcional -->
+    <link rel="icon" href="assets/img/favicon.png" />
+</head>
+
+<body>
+    <!-- Top bar -->
+    <div class="topbar">
+        <div class="container">
+            <div class="inner">
+                <div class="meta">
+                    <span class="pill">Jr. José de Sucre 765 - 3er Piso, Huaraz - Áncash</span>
+                    <span class="pill">☎ 972 495 162</span>
+                    <span class="pill">✉ secretariageneralcaa@camaradeancash.org.pe</span>
+                </div>
+                <div class="pill">Corte Superior de Arbitraje – CCITA</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header / Nav -->
+    <header>
+        <div class="container">
+            <div class="nav">
+                <a class="brand" href="#inicio" aria-label="Inicio">
+                    <div class="logo">
+                        <!-- Reemplaza logo.png por tu logo real -->
+                        <img src="LOGOCORTE.png" alt="Logo Corte de Arbitraje" onerror="this.style.display='none';this.parentElement.textContent='CA';" />
+                    </div>
+                    <div class="txt">
+                        <div class="t1">Corte Superior de Arbitraje</div>
+                        <div class="t2">Cámara de Comercio de Áncash</div>
+                    </div>
+                </a>
+
+                <nav aria-label="Navegación principal">
+                    <ul>
+                        <li><a href="index.php">Nosotros</a></li>
+                        <li><a href="/organizacion.php">Organización</a></li>
+                        <li><a href="#arbitraje">Arbitraje</a></li>
+                        <li><a href="#reglamentos">Reglamentos</a></li>
+                        <li><a href="#sig">Sistema Integrado</a></li>
+                        <li><a href="#contacto">Contacto</a></li>
+                    </ul>
+                </nav>
+
+                <div class="actions">
+                    <a class="btn btn-outline" href="#reglamentos">Ver reglamentos</a>
+                    <a class="btn btn-primary" href="#arbitraje">Ingresar</a>
+
+                    <button class="burger" id="burger" aria-label="Abrir menú">
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile menu -->
+            <div class="mobile" id="mobileMenu">
+                <a href="#nosotros">Nosotros</a>
+                <a href="#organizacion">Organización</a>
+                <a href="#arbitraje">Arbitraje</a>
+                <a href="#reglamentos">Reglamentos</a>
+                <a href="#sig">Sistema Integrado</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section class="fondo-pagina nosotros hero-like"
+        style="background-image:url('https://www.mimeser.com.pe/wp-content/themes/tema_mimeser/img/bg-miga-contacto.jpg');">
+
+        <div class="hero-overlay"></div>
+
+        <div class="container hero-inner">
+            <div class="breadcrumb">
+                <a href="index.php">Inicio</a> <span class="sep">/</span> <span>Nosotros</span>
+            </div>
+
+            <div class="title_miga">
+                <div class="hero-mark" aria-hidden="true">
+                    <img src="https://www.mimeser.com.pe/wp-content/themes/tema_mimeser/img/ico-miga-nosotros.png" alt="">
+                </div>
+
+                <h3>Nosotros</h3>
+            </div>
+        </div>
+
+        <div class="hero-wave" aria-hidden="true">
+            <svg viewBox="0 0 1440 120" preserveAspectRatio="none">
+                <path d="M0,80 C240,120 480,20 720,60 C960,100 1200,40 1440,70 L1440,120 L0,120 Z"></path>
+            </svg>
+        </div>
+    </section>
+
+
+
+    <!-- Organización -->
+    <section id="organizacion" class="organization-clean">
+        <div class="container">
+            <div class="section-head reveal">
+                <div>
+                    <h2>Organización</h2>
+                    <p>Consejo Superior de la Corte de Arbitraje y Secretaría General.</p>
+                </div>
+            </div>
+
+            <div class="org-panel reveal reveal-delay-1">
+                <div class="org-kicker">Consejo institucional</div>
+                <h3>Consejo Superior de Arbitraje</h3>
+                <p class="muted">
+                    Conformado por profesionales con amplio conocimiento de la Ley de Arbitraje y reglamentos aplicables.
+                    Su misión es asegurar la correcta aplicación del Reglamento y del marco normativo vigente, garantizando una administración adecuada, eficiente y transparente.
+                </p>
+
+                <div class="org-people" aria-label="Miembros del Consejo Superior">
+                    <article class="org-person reveal reveal-delay-1">
+                        <div class="org-person__media">
+                            <img src="/img/directivos/Juan-Hugo-Villar-nanez.png" alt="Dr. Juan Hugo Villar Ñañez">
+                        </div>
+                        <div class="org-person__body">
+                            <h4 class="org-person__name">Dr. Juan Hugo Villar Ñañez</h4>
+                            <p class="org-person__role">Presidente</p>
+                        </div>
+                    </article>
+                    <article class="org-person reveal reveal-delay-1">
+                        <div class="org-person__media">
+                            <img src="/img/directivos/Felix-Claudi-Julca-Guerrero.png" alt="Dr. Felix Claudio Julca Guerrero">
+                        </div>
+                        <div class="org-person__body">
+                            <h4 class="org-person__name">Dr. Felix Claudio Julca Guerrero</h4>
+                            <p class="org-person__role">Vicepresidente</p>
+                        </div>
+                    </article>
+                    <article class="org-person reveal reveal-delay-2">
+                        <div class="org-person__media">
+                            <img src="/img/directivos/luis-francisco-dias-padilla.png" alt="Ing. Luis Francisco Díaz Padilla">
+                        </div>
+                        <div class="org-person__body">
+                            <h4 class="org-person__name">Ing. Luis Francisco Díaz Padilla</h4>
+                            <p class="org-person__role">Consejero</p>
+                        </div>
+                    </article>
+                    <article class="org-person reveal reveal-delay-2">
+                        <div class="org-person__media">
+                            <img src="/img/directivos/Elena-milagros-rios.png" alt="Ing. Elena Milagros Ríos Ortiz">
+                        </div>
+                        <div class="org-person__body">
+                            <h4 class="org-person__name">Ing. Elena Milagros Ríos Ortiz</h4>
+                            <p class="org-person__role">Consejera</p>
+                        </div>
+                    </article>
+                    <article class="org-person reveal reveal-delay-3">
+                        <div class="org-person__media">
+                            <img src="/img/directivos/Ricardo-Augusto%20-Maldonado%20-Vergara.png" alt="Dr. Ricardo Augusto Maldonado Vergara">
+                        </div>
+                        <div class="org-person__body">
+                            <h4 class="org-person__name">Dr. Ricardo Augusto Maldonado Vergara</h4>
+                            <p class="org-person__role">Consejero</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="org-grid">
+                <div class="org-panel reveal reveal-delay-2">
+                    <div class="org-kicker">Gestión administrativa</div>
+                    <h3>Secretaría General</h3>
+                    <p class="muted">
+                        Autoridad administrativa responsable de la gestión y administración de la Corte, y del cumplimiento de los acuerdos del Consejo Superior.
+                    </p>
+                    <ul class="org-list">
+                        <li>
+                            <div><b>Responsable:</b> Dra. María del Carmen Segura Córdova.</div>
+                        </li>
+                        <li>
+                            <div>Conduce la operatividad institucional y articula el cumplimiento de los acuerdos adoptados por el Consejo Superior.</div>
+                        </li>
+                        <li>
+                            <div>Cuenta con experiencia en mecanismos alternativos de solución de controversias y fortalecimiento institucional.</div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="org-panel reveal reveal-delay-3">
+                    <div class="org-kicker">Soporte institucional</div>
+                    <h3>Secretarías arbitrales y personal administrativo</h3>
+                    <p class="muted">
+                        Brindan soporte operativo y documentario a los árbitros y a los usuarios de la Corte durante el desarrollo de los procesos arbitrales.
+                    </p>
+                    <div class="org-mini-card">
+                        <h4>Atención y seguimiento</h4>
+                        <p>Coordinación de expedientes, control documentario, programación de actuaciones y asistencia permanente a los órganos arbitrales.</p>
+                    </div>
+                    <div class="org-mini-card">
+                        <h4>Apoyo administrativo</h4>
+                        <p>Gestión interna, comunicaciones institucionales y soporte a la atención de usuarios conforme a los lineamientos de la Corte.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">
+                <img src="assets/img/logo.png" alt="Logo" />
+                <div>
+                    <b>Corte Superior de Arbitraje</b>
+                    <span>Cámara de Comercio de Áncash</span>
+                </div>
+            </div>
+
+            <div class="footer-copy">
+                © <span id="year"></span> Corte Superior de Arbitraje – CCITA. Todos los derechos reservados.
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS -->
+    <script src="assets/js/organizacion.js"></script>
+</body>
+
+</html>
