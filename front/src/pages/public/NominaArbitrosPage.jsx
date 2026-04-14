@@ -1,88 +1,83 @@
 import { useState } from "react";
 
 const arbitros = [
-  { id: 1, nombre: "AUGUSTO VILLANUEVA LLAQUE", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 2, nombre: "CARLOS MATHEUS LOPEZ", profesion: "ABOGADO", rna: "" },
-  { id: 3, nombre: "CARLOS ALBERTO SOTO COAGUILA", profesion: "ABOGADO", rna: "" },
-  { id: 4, nombre: "DANIEL TRIVEÑO DAZA", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 5, nombre: "HALLEY LOPEZ ZALDIVAR", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 6, nombre: "HUGO VILLAR ÑAÑEZ", profesion: "ABOGADO", rna: "" },
-  { id: 7, nombre: "HUGO ERNESTO SOLOGUREN CALMET PONTE", profesion: "ABOGADO", rna: "" },
-  { id: 8, nombre: "HUMBERTO FLORES AREVALO", profesion: "ABOGADO", rna: "" },
-  { id: 9, nombre: "JHOEL CHIPANA CATALÁN", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 10, nombre: "JOSE ANTONIO LEON RODRIGUEZ", profesion: "ABOGADO", rna: "" },
-  { id: 11, nombre: "JOSE LUIS MANDUJANO RUBIN", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 12, nombre: "LUIS PUGLIANINI GUERRA", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 13, nombre: "MARIA DEL CARMEN SEGURA CORDOVA", profesion: "ABOGADA", rna: "" },
-  { id: 14, nombre: "MARIO MANUEL SILVA LOPEZ", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 15, nombre: "PATRICK HURTADO TUEROS", profesion: "ABOGADO", rna: "" },
-  { id: 16, nombre: "RENEE LUCIA DE FATIMA PELAEZ RAMIREZ", profesion: "ABOGADA", rna: "VIGENTE" },
-  { id: 17, nombre: "SANDRO ESPINOZA QUIÑONES", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 18, nombre: "ANTONIO ISAIAS SOLORZANO REPETTO", profesion: "MEDICO", rna: "" },
-  { id: 19, nombre: "LORENZO DOLORES RIVERA", profesion: "INGENIERO", rna: "" },
-  { id: 20, nombre: "KATTY MENDOZA MURGADO", profesion: "ABOGADA", rna: "VIGENTE" },
-  { id: 21, nombre: "ISABEL ANDRADE VILLAVICENSIOS", profesion: "ABOGADA", rna: "VIGENTE" },
-  { id: 22, nombre: "ADOLFO ALONSO PULGAR SOAREZ", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 23, nombre: "ROY ALEX PARIASCA VALERIO", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 24, nombre: "PATRICIA MARY LORA RIOS", profesion: "ABOGADA", rna: "VIGENTE" },
-  { id: 25, nombre: "CARLOS ENRIQUE ALVAREZ SOLIS", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 26, nombre: "CLARA MARIA ZAVALA MORA", profesion: "ABOGADA", rna: "VIGENTE" },
-  { id: 27, nombre: "HOMERO ABSALON SALAZAR CHAVEZ", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 28, nombre: "IVAN PAREDEZ NEYRA", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 29, nombre: "MIGUEL ANGEL SANTA CRUZ VITAL", profesion: "ABOGADO", rna: "" },
-  { id: 30, nombre: "MARIA ROCIO CANO GUERINONI", profesion: "ABOGADA", rna: "" },
-  { id: 31, nombre: "RAFAEL ARTIEDA ARAMBURÚ", profesion: "ABOGADO", rna: "" },
-  { id: 32, nombre: "ROBERTO CARLOS BENAVIDES PONTEX", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 33, nombre: "ENRIQUE MARTIN LA ROSA UBILLAS", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 34, nombre: "MIGUEL ERNESTO PALACIOS CHAVEZ", profesion: "ABOGADO", rna: "" },
-  { id: 35, nombre: "ELIZABETH RAMOS LARA", profesion: "ABOGADA", rna: "" },
-  { id: 36, nombre: "JUAN MANUEL HURTADO FALVY", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 37, nombre: "GIANFRANCO RAUL FERRUZO DAVILA", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 38, nombre: "LUIS ALFREDO LEON SEGURA", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 39, nombre: "GIORGIO SCHIAPPA-PIETRA FUENTES", profesion: "ABOGADO", rna: "" },
-  { id: 40, nombre: "LAURA GUTIERREZ GONZALES", profesion: "ABOGADA", rna: "" },
-  { id: 41, nombre: "JUAN CARLOS PINTO ESCOBEDO", profesion: "ABOGADO", rna: "VIGENTE" },
-  { id: 42, nombre: "IVETTE EVELYN ALVINO CRUZ", profesion: "ABOGADA", rna: "VIGENTE" },
-  { id: 43, nombre: "LIZBETH NAILEA ANCCASI IZARRA", profesion: "ABOGADA", rna: "" },
+  { id: 1, nombre: "CARLOS MATHEUS LOPEZ", profesion: "ABOGADO" },
+  { id: 2, nombre: "CARLOS ALBERTO SOTO COAGUILA", profesion: "ABOGADO" },
+  { id: 3, nombre: "DANIEL TRIVE\u00d1O DAZA", profesion: "ABOGADO" },
+  { id: 4, nombre: "HALLEY LOPEZ ZALDIVAR", profesion: "ABOGADO" },
+  { id: 5, nombre: "HUGO VILLAR \u00d1A\u00d1EZ", profesion: "ABOGADO" },
+  { id: 6, nombre: "HUGO ERNESTO SOLOGUREN CALMET PONTE", profesion: "ABOGADO" },
+  { id: 7, nombre: "HUMBERTO FLORES AREVALO", profesion: "ABOGADO" },
+  { id: 8, nombre: "JHOEL CHIPANA CATAL\u00c1N", profesion: "ABOGADO" },
+  { id: 9, nombre: "JOSE ANTONIO LEON RODRIGUEZ", profesion: "ABOGADO" },
+  { id: 10, nombre: "JOSE LUIS MANDUJANO RUBIN", profesion: "ABOGADO" },
+  { id: 11, nombre: "LUIS PUGLIANINI GUERRA", profesion: "ABOGADO" },
+  { id: 12, nombre: "MARIA DEL CARMEN SEGURA CORDOVA", profesion: "ABOGADA" },
+  { id: 13, nombre: "PATRICK HURTADO TUEROS", profesion: "ABOGADO" },
+  { id: 14, nombre: "RENEE LUCIA DE FATIMA PELAEZ RAMIREZ", profesion: "ABOGADA" },
+  { id: 15, nombre: "SANDRO ESPINOZA QUI\u00d1ONES", profesion: "ABOGADO" },
+  { id: 16, nombre: "ANTONIO ISAIAS SOLORZANO REPETTO", profesion: "MEDICO" },
+  { id: 17, nombre: "LORENZO DOLORES RIVERA", profesion: "INGENIERO" },
+  { id: 18, nombre: "KATTY MENDOZA MURGADO", profesion: "ABOGADA" },
+  { id: 19, nombre: "ISABEL ANDRADE VILLAVICENSIOS", profesion: "ABOGADA" },
+  { id: 20, nombre: "ADOLFO ALONSO PULGAR SOAREZ", profesion: "ABOGADO" },
+  { id: 21, nombre: "ROY ALEX PARIASCA VALERIO", profesion: "ABOGADO" },
+  { id: 22, nombre: "PATRICIA MARY LORA RIOS", profesion: "ABOGADA" },
+  { id: 23, nombre: "CARLOS ENRIQUE ALVAREZ SOLIS", profesion: "ABOGADO" },
+  { id: 24, nombre: "CLARA MARIA ZAVALA MORA", profesion: "ABOGADA" },
+  { id: 25, nombre: "HOMERO ABSALON SALAZAR CHAVEZ", profesion: "ABOGADO" },
+  { id: 26, nombre: "IVAN PAREDEZ NEYRA", profesion: "ABOGADO" },
+  { id: 27, nombre: "MIGUEL ANGEL SANTA CRUZ VITAL", profesion: "ABOGADO" },
+  { id: 28, nombre: "MARIA ROCIO CANO GUERINONI", profesion: "ABOGADA" },
+  { id: 29, nombre: "RAFAEL ARTIEDA ARAMBUR\u00da", profesion: "ABOGADO" },
+  { id: 30, nombre: "ROBERTO CARLOS BENAVIDES PONTEX", profesion: "ABOGADO" },
+  { id: 31, nombre: "ENRIQUE MARTIN LA ROSA UBILLAS", profesion: "ABOGADO" },
+  { id: 32, nombre: "ELIZABETH RAMOS LARA", profesion: "ABOGADA" },
+  { id: 33, nombre: "JUAN MANUEL HURTADO FALVY", profesion: "ABOGADO" },
+  { id: 34, nombre: "GIANFRANCO RAUL FERRUZO DAVILA", profesion: "ABOGADO" },
+  { id: 35, nombre: "LUIS ALFREDO LEON SEGURA", profesion: "ABOGADO" },
+  { id: 36, nombre: "GIORGIO SCHIAPPA-PIETRA FUENTES", profesion: "ABOGADO" },
+  { id: 37, nombre: "LAURA GUTIERREZ GONZALES", profesion: "ABOGADA" },
+  { id: 39, nombre: "JUAN CARLOS PINTO ESCOBEDO", profesion: "ABOGADO" },
+  { id: 40, nombre: "IVETTE EVELYN ALVINO CRUZ", profesion: "ABOGADA" },
+  { id: 41, nombre: "LIZBETH NAILEA ANCCASI IZARRA", profesion: "ABOGADA" },
 ];
 
-const vigentes = arbitros.filter((item) => item.rna === "VIGENTE").length;
+const conteoProfesiones = arbitros.reduce((acc, arbitro) => {
+  acc[arbitro.profesion] = (acc[arbitro.profesion] || 0) + 1;
+  return acc;
+}, {});
 
 export default function NominaArbitrosPage() {
   const [busqueda, setBusqueda] = useState("");
 
   const termino = busqueda.trim().toLowerCase();
   const filtrados = arbitros.filter((arbitro) => {
-    const base = `${arbitro.nombre} ${arbitro.profesion} ${arbitro.rna || "sin dato"}`.toLowerCase();
+    const base = `${arbitro.nombre} ${arbitro.profesion}`.toLowerCase();
     return base.includes(termino);
   });
 
   return (
     <section className="public-shell page-block">
-      <div className="page-block__header">
-        <p className="page-block__eyebrow">Directorio institucional</p>
-        <h2>Nómina de árbitros</h2>
-        <p>
-          Relación oficial de profesionales que integran la nómina institucional
-          de la Corte de Arbitraje para el periodo 2026.
-        </p>
-      </div>
-
       <section className="roster-panel">
         <div className="roster-panel__top">
           <div className="roster-panel__summary">
             <span className="roster-chip">
               <i className="fa-solid fa-users" aria-hidden="true" />
-              {arbitros.length} árbitros
+              {arbitros.length} arbitros
             </span>
-            <span className="roster-chip roster-chip--soft">
-              <i className="fa-solid fa-certificate" aria-hidden="true" />
-              {vigentes} con RNA vigente
-            </span>
-            <span className="roster-chip roster-chip--neutral">
-              <i className="fa-solid fa-filter" aria-hidden="true" />
-              {filtrados.length} resultados
-            </span>
+            {Object.entries(conteoProfesiones).map(([profesion, cantidad]) => (
+              <span
+                key={profesion}
+                className={`roster-chip ${
+                  profesion === "ABOGADO" ? "roster-chip--soft" : "roster-chip--neutral"
+                }`}
+              >
+                <i className="fa-solid fa-layer-group" aria-hidden="true" />
+                {cantidad} {profesion.toLowerCase()}
+                {cantidad !== 1 ? "s" : ""}
+              </span>
+            ))}
           </div>
 
           <a className="roster-download" href="/docs/nomina-de-arbitros-2026.xlsx" download>
@@ -99,7 +94,7 @@ export default function NominaArbitrosPage() {
               type="search"
               value={busqueda}
               onChange={(event) => setBusqueda(event.target.value)}
-              placeholder="Buscar por nombre, profesión o estado RNA"
+              placeholder="Buscar por nombre o profesion"
             />
           </label>
         </div>
@@ -110,8 +105,7 @@ export default function NominaArbitrosPage() {
               <tr>
                 <th>N°</th>
                 <th>Nombres</th>
-                <th>Profesión</th>
-                <th>RNA</th>
+                <th>Profesion</th>
               </tr>
             </thead>
             <tbody>
@@ -120,20 +114,13 @@ export default function NominaArbitrosPage() {
                   <tr key={arbitro.id}>
                     <td data-label="N°">{arbitro.id}</td>
                     <td data-label="Nombres">{arbitro.nombre}</td>
-                    <td data-label="Profesión">{arbitro.profesion}</td>
-                    <td data-label="RNA">
-                      {arbitro.rna ? (
-                        <span className="rna-badge">Vigente</span>
-                      ) : (
-                        <span className="rna-badge rna-badge--muted">Sin dato</span>
-                      )}
-                    </td>
+                    <td data-label="Profesion">{arbitro.profesion}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td className="roster-empty" colSpan="4">
-                    No se encontraron árbitros con ese criterio de búsqueda.
+                  <td className="roster-empty" colSpan="3">
+                    No se encontraron arbitros con ese criterio de busqueda.
                   </td>
                 </tr>
               )}

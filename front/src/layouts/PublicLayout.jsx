@@ -3,8 +3,27 @@ import { NavLink, Outlet, useLocation, Link, useNavigate } from "react-router-do
 
 const navItems = [
   { to: "/", label: "Inicio", end: true },
-  { to: "/organizacion", label: "Organización" },
-  { to: "/arbitraje", label: "Arbitraje" },
+  {
+    to: "/organizacion",
+    label: "Organización",
+    children: [
+      { to: "/organizacion", label: "Consejo superior", icon: "fa-solid fa-sitemap" },
+      { to: "/secretaria-general", label: "Secretaria general", icon: "fa-solid fa-building-user" },
+    ],
+  },
+  {
+    to: "/arbitraje",
+    label: "Arbitraje",
+    children: [
+      { to: "/arbitraje", label: "Enlaces arbitrales", icon: "fa-solid fa-link" },
+      { to: "/nomina-arbitros", label: "Nomina de Arbitros", icon: "fa-solid fa-scale-balanced" },
+      { to: "/reglamentos-directivos", label: "Reglamentos", icon: "fa-solid fa-book-bookmark" },
+      { to: "/tarifario-virtual", label: "Tarifario virtual", icon: "fa-solid fa-calculator" },
+      { to: "/tarifario-incorporacion", label: "Tarifario de incorporacion", icon: "fa-solid fa-file-circle-plus" },
+      { to: "/documentos/institucionales/Licencia%20de%20funcionamiento.pdf", label: "Licencia de funcionamiento", icon: "fa-solid fa-file-circle-plus" },
+      { to: "/comunicados", label: "Comunicados", icon: "fa-solid fa-bullhorn" },
+    ],
+  },
   { to: "/jrd", label: "JRD" },
   { to: "/sig", label: "SIG" },
   { to: "/contacto", label: "Contacto" },
@@ -17,6 +36,14 @@ const pageBanners = {
     subtitle: "Estructura institucional y equipo de la Corte de Arbitraje",
     image: "/img/organizacion.jpg",
     icon: "fa-solid fa-sitemap",
+    cutColor: "#f3f4f6",
+  },
+  "/secretaria-general": {
+    crumbCurrent: "Secretaríaa General",
+    title: "SECRETARÍA GENERAL",
+    subtitle: "Gestipón administrativa y soporte institucional de la Corte de Arbitraje",
+    image: "/img/organizacion.jpg",
+    icon: "fa-solid fa-building-user",
     cutColor: "#f3f4f6",
   },
   "/arbitraje": {
@@ -131,11 +158,13 @@ export default function PublicLayout() {
   const { pathname, search } = useLocation();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [openSubmenu, setOpenSubmenu] = useState(null);
   const [showScrollTop, setShowScrollTop] = useState(false);
   const [trackingOpen, setTrackingOpen] = useState(false);
 
   useEffect(() => {
     setMenuOpen(false);
+    setOpenSubmenu(null);
   }, [pathname, search]);
 
   useEffect(() => {
@@ -244,16 +273,75 @@ export default function PublicLayout() {
             </div>
 
             {navItems.map((item) => (
-              <NavLink
-                key={item.to}
-                to={item.to}
-                end={item.end}
-                className={({ isActive }) =>
-                  `public-nav__link${isActive ? " is-active" : ""}`
-                }
-              >
-                {item.label}
-              </NavLink>
+              item.children?.length ? (
+                <div
+                  key={item.to}
+                  className={`public-nav__group${
+                    item.to === pathname || item.children.some((child) => child.to === pathname)
+                      ? " is-active"
+                      : ""
+                  }${openSubmenu === item.to ? " is-open" : ""}`}
+                >
+                  <div className="public-nav__group-head">
+                    <NavLink
+                      to={item.to}
+                      className={({ isActive }) =>
+                        `public-nav__link${
+                          isActive || item.children.some((child) => child.to === pathname)
+                            ? " is-active"
+                            : ""
+                        }`
+                      }
+                    >
+                      {item.label}
+                    </NavLink>
+                    <button
+                      type="button"
+                      className={`public-nav__toggle${openSubmenu === item.to ? " is-open" : ""}`}
+                      aria-label={`Abrir submenu de ${item.label}`}
+                      aria-expanded={openSubmenu === item.to}
+                      onClick={() =>
+                        setOpenSubmenu((current) => (current === item.to ? null : item.to))
+                      }
+                    >
+                      <i className="fa-solid fa-chevron-down" aria-hidden="true" />
+                    </button>
+                  </div>
+
+                  <div className="public-nav__submenu">
+                    {item.children.map((child) => (
+                      <NavLink
+                        key={child.to}
+                        to={child.to}
+                        end={child.to === "/arbitraje" || child.to === "/organizacion"}
+                        onClick={() => setOpenSubmenu(null)}
+                        className={({ isActive }) =>
+                          `public-nav__sublink${isActive ? " is-active" : ""}`
+                        }
+                      >
+                        <span className="public-nav__sublink-icon" aria-hidden="true">
+                          <i className={child.icon} />
+                        </span>
+                        <span className="public-nav__sublink-text">{child.label}</span>
+                        <span className="public-nav__sublink-arrow" aria-hidden="true">
+                          <i className="fa-solid fa-arrow-right" />
+                        </span>
+                      </NavLink>
+                    ))}
+                  </div>
+                </div>
+              ) : (
+                <NavLink
+                  key={item.to}
+                  to={item.to}
+                  end={item.end}
+                  className={({ isActive }) =>
+                    `public-nav__link${isActive ? " is-active" : ""}`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              )
             ))}
 
             <div className="public-nav__mobile-actions">

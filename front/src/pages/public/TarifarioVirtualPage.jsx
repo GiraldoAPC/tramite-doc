@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 
 const UIT = 5500;
 const TAX_RATE = 0.18;
@@ -12,20 +13,6 @@ const tramos = [
   { key: "20-100", label: "De 20 a 100 UIT", min: 20, max: 100, rate: 0.035 },
   { key: "100-200", label: "De 100 a 200 UIT", min: 100, max: 200, rate: 0.03 },
   { key: "200+", label: "Mas de 200 UIT", min: 200, max: Number.POSITIVE_INFINITY, rate: 0.025 },
-];
-
-const cargosFijos = [
-  { codigo: "AR-01", concepto: "Presentacion de solicitud de arbitraje", monto: 500 },
-  { codigo: "DA-01", concepto: "Designacion de arbitro", monto: 500 },
-  { codigo: "RR-01", concepto: "Resolucion de recusacion de un arbitro", monto: 500 },
-  { codigo: "RR-02", concepto: "Resolucion de recusacion de dos arbitros", monto: 750 },
-  { codigo: "RR-03", concepto: "Resolucion de recusacion de tres arbitros", monto: 1000 },
-  { codigo: "RA-01", concepto: "Postulacion a la inscripcion al registro de arbitros", monto: 100 },
-  { codigo: "RA-02", concepto: "Inscripcion al registro de arbitros", monto: 500 },
-  { codigo: "RA-03", concepto: "Renovacion del registro de arbitros", monto: 500 },
-  { codigo: "EC-01", concepto: "Emision de copias simples por pagina", monto: 1 },
-  { codigo: "EC-02", concepto: "Emision de copias certificadas por pagina", monto: 3 },
-  { codigo: "CA-01", concepto: "Resolucion de incidencias sobre liquidacion de costos arbitrales", monto: 500 },
 ];
 
 function getRate(uitValue) {
@@ -175,18 +162,8 @@ export default function TarifarioVirtualPage() {
 
   return (
     <section className="public-shell page-block">
-      <div className="page-block__header">
-        <p className="page-block__eyebrow">Servicios institucionales</p>
-        <h2>Tarifario virtual</h2>
-        <p>
-          Cuadro de tasas y calculadora referencial para costos arbitrales,
-          conforme al anexo institucional vigente.
-        </p>
-      </div>
-
       <section className="tariff-hero">
         <div className="tariff-hero__copy">
-          <span className="tariff-kicker">Cuadro de tasas</span>
           <h3>Calculadora de costos arbitrales</h3>
           <p>
             Estime gastos administrativos, honorarios arbitrales y costo total
@@ -389,95 +366,24 @@ export default function TarifarioVirtualPage() {
         </aside>
       </section>
 
-      <section className="tariff-grid">
-        <article className="tariff-panel tariff-panel--soft">
-          <div className="tariff-panel__head">
-            <p className="page-block__eyebrow">Tasas por cuantia</p>
-            <h3>Honorarios del arbitro unico y gastos de la Corte</h3>
-          </div>
-
-          <div className="tariff-table-wrap">
-            <table className="tariff-table">
-              <thead>
-                <tr>
-                  <th>Tramo</th>
-                  <th>Tasa</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tramos.map((tramoItem) => (
-                  <tr key={tramoItem.key}>
-                    <td>{tramoItem.label}</td>
-                    <td>{(tramoItem.rate * 100).toFixed(2)}%</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </article>
-
-        <article className="tariff-panel tariff-panel--soft">
-          <div className="tariff-panel__head">
-            <p className="page-block__eyebrow">Notas operativas</p>
-            <h3>Criterios resumidos de aplicacion</h3>
-          </div>
-
-          <div className="tariff-criteria tariff-criteria--stack">
-            <article className="tariff-criteria__item">
-              <span className="tariff-criteria__dot" aria-hidden="true" />
-              <div>
-                <h4>No cuantificadas</h4>
-                <p>Se liquidan segun el cuadro de tasas, previa cuantificacion.</p>
-              </div>
-            </article>
-
-            <article className="tariff-criteria__item">
-              <span className="tariff-criteria__dot" aria-hidden="true" />
-              <div>
-                <h4>No cuantificables</h4>
-                <p>Se aplica el 2% del monto contractual por cada pretension.</p>
-              </div>
-            </article>
-
-            <article className="tariff-criteria__item">
-              <span className="tariff-criteria__dot" aria-hidden="true" />
-              <div>
-                <h4>Tribunal arbitral</h4>
-                <p>El resultado de honorarios del colegiado se multiplica por 2.</p>
-              </div>
-            </article>
-          </div>
-        </article>
-      </section>
-
       <section className="tariff-panel tariff-panel--soft">
         <div className="tariff-panel__head">
-          <p className="page-block__eyebrow">Otros conceptos</p>
-          <h3>Cargos fijos del cuadro de tasas</h3>
+          <p className="page-block__eyebrow">Informacion complementaria</p>
+          <h3>Tarifario de incorporacion</h3>
         </div>
-
-        <div className="tariff-table-wrap">
-          <table className="tariff-table tariff-table--wide">
-            <thead>
-              <tr>
-                <th>Codigo</th>
-                <th>Concepto</th>
-                <th>Monto</th>
-              </tr>
-            </thead>
-            <tbody>
-              {cargosFijos.map((item) => (
-                <tr key={item.codigo}>
-                  <td>{item.codigo}</td>
-                  <td>{item.concepto}</td>
-                  <td>{formatMoney(item.monto)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div className="tariff-note">
+          <p>
+            Las tablas de tasas por cuantia y las notas operativas fueron separadas
+            en una pagina independiente para una consulta mas clara.
+          </p>
+        </div>
+        <div className="tariff-actions" style={{ marginTop: "18px" }}>
+          <Link className="roster-download" to="/tarifario-incorporacion">
+            <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
+            Ver tarifario de incorporacion
+          </Link>
         </div>
       </section>
-
     </section>
   );
 }

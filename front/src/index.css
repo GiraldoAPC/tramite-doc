@@ -2,6 +2,9 @@
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  --scrollbar-track: transparent;
+  --scrollbar-thumb: rgba(93, 117, 152, 0.42);
+  --scrollbar-thumb-hover: rgba(63, 85, 117, 0.58);
 }
 
 html,
@@ -11,8 +14,44 @@ body,
   min-height: 100vh;
 }
 
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-track);
+}
+
 body {
   margin: 0;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  background: transparent;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+  box-shadow: none;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(219, 128, 47, 0.72), var(--scrollbar-thumb));
+  border-radius: 999px;
+  border: 0;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(219, 128, 47, 0.9), var(--scrollbar-thumb-hover));
+}
+
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 a {

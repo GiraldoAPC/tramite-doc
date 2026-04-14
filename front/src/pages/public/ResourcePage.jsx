@@ -1,3 +1,5 @@
+import TarifarioIncorporacionPage from "./TarifarioIncorporacionPage";
+
 function ResourceLink({ document }) {
   const content = (
     <>
@@ -43,6 +45,14 @@ export default function ResourcePage({
   documents = [],
   sections = [],
 }) {
+  const normalizedTitle = String(title ?? "").toLowerCase();
+  const isTarifarioIncorporacion =
+    normalizedTitle.includes("tarifario") && normalizedTitle.includes("incorpor");
+
+  if (isTarifarioIncorporacion) {
+    return <TarifarioIncorporacionPage />;
+  }
+
   const resolvedSections = sections.length
     ? sections
     : documents.length
