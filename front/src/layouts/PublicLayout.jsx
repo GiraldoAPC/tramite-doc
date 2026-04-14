@@ -9,6 +9,7 @@ const navItems = [
     children: [
       { to: "/organizacion", label: "Consejo superior", icon: "fa-solid fa-sitemap" },
       { to: "/secretaria-general", label: "Secretaria general", icon: "fa-solid fa-building-user" },
+      { to: "/documentos/institucionales/Licencia%20de%20funcionamiento.pdf", label: "Licencia de funcionamiento", icon: "fa-solid fa-file-circle-plus" },
     ],
   },
   {
@@ -20,7 +21,6 @@ const navItems = [
       { to: "/reglamentos-directivos", label: "Reglamentos", icon: "fa-solid fa-book-bookmark" },
       { to: "/tarifario-virtual", label: "Tarifario virtual", icon: "fa-solid fa-calculator" },
       { to: "/tarifario-incorporacion", label: "Tarifario de incorporacion", icon: "fa-solid fa-file-circle-plus" },
-      { to: "/documentos/institucionales/Licencia%20de%20funcionamiento.pdf", label: "Licencia de funcionamiento", icon: "fa-solid fa-file-circle-plus" },
       { to: "/comunicados", label: "Comunicados", icon: "fa-solid fa-bullhorn" },
     ],
   },
@@ -309,25 +309,50 @@ export default function PublicLayout() {
                   </div>
 
                   <div className="public-nav__submenu">
-                    {item.children.map((child) => (
-                      <NavLink
-                        key={child.to}
-                        to={child.to}
-                        end={child.to === "/arbitraje" || child.to === "/organizacion"}
-                        onClick={() => setOpenSubmenu(null)}
-                        className={({ isActive }) =>
-                          `public-nav__sublink${isActive ? " is-active" : ""}`
-                        }
-                      >
-                        <span className="public-nav__sublink-icon" aria-hidden="true">
-                          <i className={child.icon} />
-                        </span>
-                        <span className="public-nav__sublink-text">{child.label}</span>
-                        <span className="public-nav__sublink-arrow" aria-hidden="true">
-                          <i className="fa-solid fa-arrow-right" />
-                        </span>
-                      </NavLink>
-                    ))}
+                    {item.children.map((child) => {
+                      const isDocumentLink = child.to.toLowerCase().endsWith(".pdf");
+
+                      if (isDocumentLink) {
+                        return (
+                          <a
+                            key={child.to}
+                            href={child.to}
+                            target="_blank"
+                            rel="noreferrer"
+                            onClick={() => setOpenSubmenu(null)}
+                            className="public-nav__sublink"
+                          >
+                            <span className="public-nav__sublink-icon" aria-hidden="true">
+                              <i className={child.icon} />
+                            </span>
+                            <span className="public-nav__sublink-text">{child.label}</span>
+                            <span className="public-nav__sublink-arrow" aria-hidden="true">
+                              <i className="fa-solid fa-arrow-right" />
+                            </span>
+                          </a>
+                        );
+                      }
+
+                      return (
+                        <NavLink
+                          key={child.to}
+                          to={child.to}
+                          end={child.to === "/arbitraje" || child.to === "/organizacion"}
+                          onClick={() => setOpenSubmenu(null)}
+                          className={({ isActive }) =>
+                            `public-nav__sublink${isActive ? " is-active" : ""}`
+                          }
+                        >
+                          <span className="public-nav__sublink-icon" aria-hidden="true">
+                            <i className={child.icon} />
+                          </span>
+                          <span className="public-nav__sublink-text">{child.label}</span>
+                          <span className="public-nav__sublink-arrow" aria-hidden="true">
+                            <i className="fa-solid fa-arrow-right" />
+                          </span>
+                        </NavLink>
+                      );
+                    })}
                   </div>
                 </div>
               ) : (

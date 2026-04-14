@@ -1,22 +1,26 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Link } from "react-router-dom";
 
-const UIT = 5500;
+const UIT = 5350;
 const TAX_RATE = 0.18;
 const NON_QUANTIFIABLE_RATE = 0.02;
 const REQUEST_FEE = 500;
 
-const tramos = [
-  { key: "0-4", label: "De 0 a 4 UIT", min: 0, max: 4, rate: 0.05 },
-  { key: "4-10", label: "De 4 a 10 UIT", min: 4, max: 10, rate: 0.045 },
-  { key: "10-20", label: "De 10 a 20 UIT", min: 10, max: 20, rate: 0.04 },
-  { key: "20-100", label: "De 20 a 100 UIT", min: 20, max: 100, rate: 0.035 },
-  { key: "100-200", label: "De 100 a 200 UIT", min: 100, max: 200, rate: 0.03 },
-  { key: "200+", label: "Mas de 200 UIT", min: 200, max: Number.POSITIVE_INFINITY, rate: 0.025 },
+const tariffBands = [
+  { key: "0-1", label: "Cuantia entre 0 y 1 UIT", min: 0, max: 5350, rate: 0.05 },
+  { key: "1-2", label: "Cuantia entre >1 y 2 UIT", min: 5351, max: 10700, rate: 0.05 },
+  { key: "2-3", label: "Cuantia entre 2 y 3 UIT", min: 10701, max: 16050, rate: 0.05 },
+  { key: "3-4", label: "Cuantia entre 3 y 4 UIT", min: 16051, max: 21400, rate: 0.05 },
+  { key: "4-5", label: "Cuantia entre 4 y 5 UIT", min: 21401, max: 26750, rate: 0.045 },
+  { key: "5-10", label: "Cuantia entre 5 y 10 UIT", min: 26751, max: 53500, rate: 0.045 },
+  { key: "10-20", label: "Cuantia entre 10 y 20 UIT", min: 53501, max: 107000, rate: 0.04 },
+  { key: "20-50", label: "Cuantia entre 20 y 50 UIT", min: 107001, max: 267500, rate: 0.035 },
+  { key: "50-100", label: "Cuantia entre 50 y 100 UIT", min: 267501, max: 535000, rate: 0.035 },
+  { key: "100-200", label: "Cuantia entre 100 y 200 UIT", min: 535001, max: 1070000, rate: 0.03 },
+  { key: "200+", label: "Cuantia mayor a 200 UIT", min: 1070001, max: Number.POSITIVE_INFINITY, rate: 0.025 },
 ];
 
-function getRate(uitValue) {
-  return tramos.find((item) => uitValue >= item.min && uitValue < item.max) ?? tramos[tramos.length - 1];
+function getBandForAmount(amount) {
+  return tariffBands.find((band) => amount >= band.min && amount <= band.max) ?? tariffBands[0];
 }
 
 function formatMoney(value) {
@@ -25,6 +29,39 @@ function formatMoney(value) {
     currency: "PEN",
     minimumFractionDigits: 2,
   }).format(Number(value || 0));
+}
+
+function normalizeAmount(value) {
+  const clean = String(value ?? "").trim().replace(/\s+/g, "");
+
+  if (!clean) return Number.NaN;
+
+  const hasComma = clean.includes(",");
+  const hasDot = clean.includes(".");
+
+  if (hasComma && hasDot) {
+    const decimalSeparator = clean.lastIndexOf(",") > clean.lastIndexOf(".") ? "," : ".";
+    const thousandsSeparator = decimalSeparator === "," ? "." : ",";
+    const normalized = clean
+      .split(thousandsSeparator)
+      .join("")
+      .replace(decimalSeparator, ".");
+
+    return Number(normalized);
+  }
+
+  if (hasComma) {
+    return Number(clean.replace(/\./g, "").replace(",", "."));
+  }
+
+  return Number(clean.replace(/,/g, ""));
+}
+
+function parsePretensionAmounts(source) {
+  return String(source ?? "")
+    .split(/\r?\n|;/)
+    .map((item) => normalizeAmount(item))
+    .filter((item) => Number.isFinite(item) && item > 0);
 }
 
 function CustomSelect({ label, value, options, onChange, fullWidth = false }) {
@@ -36,12 +73,14 @@ function CustomSelect({ label, value, options, onChange, fullWidth = false }) {
     const handlePointerDown = (event) => {
       if (!rootRef.current?.contains(event.target)) setOpen(false);
     };
+
     const handleEscape = (event) => {
       if (event.key === "Escape") setOpen(false);
     };
 
     document.addEventListener("mousedown", handlePointerDown);
     document.addEventListener("keydown", handleEscape);
+
     return () => {
       document.removeEventListener("mousedown", handlePointerDown);
       document.removeEventListener("keydown", handleEscape);
@@ -91,16 +130,14 @@ function CustomSelect({ label, value, options, onChange, fullWidth = false }) {
 }
 
 export default function TarifarioVirtualPage() {
-  const [monto, setMonto] = useState("");
+  const [pretensionesTexto, setPretensionesTexto] = useState("");
   const [tipoArbitro, setTipoArbitro] = useState("unico");
   const [pretension, setPretension] = useState("cuantificada");
-  const [montoContractual, setMontoContractual] = useState(0);
+  const [montoContractual, setMontoContractual] = useState("");
   const [cantidadPretensiones, setCantidadPretensiones] = useState(1);
-  const [incluirIgv, setIncluirIgv] = useState(false);
 
   const pretensionOptions = [
     { value: "cuantificada", label: "Pretension cuantificada" },
-    { value: "no_cuantificada", label: "Pretension no cuantificada" },
     { value: "no_cuantificable", label: "Pretension no cuantificable" },
   ];
 
@@ -111,53 +148,66 @@ export default function TarifarioVirtualPage() {
 
   const resultado = useMemo(() => {
     const solicitud = REQUEST_FEE;
-    let baseMonto = Number(monto) || 0;
-    let detalleBase = "La base calculable corresponde al monto de la controversia.";
+    let pretensionBases = parsePretensionAmounts(pretensionesTexto);
+    let detalleBase = "Se aplica el Cuadro de Tasas 2025 a cada pretension ingresada.";
 
     if (pretension === "no_cuantificable") {
-      baseMonto =
-        ((Number(montoContractual) || 0) * NON_QUANTIFIABLE_RATE) *
-        Math.max(1, Number(cantidadPretensiones) || 1);
-      detalleBase = `La base calculable corresponde al ${(NON_QUANTIFIABLE_RATE * 100).toFixed(
-        0
-      )}% del monto contractual por cada pretension no cuantificable.`;
-    } else if (pretension === "no_cuantificada") {
+      const basePorPretension = (Number(montoContractual) || 0) * NON_QUANTIFIABLE_RATE;
+      const cantidad = Math.max(1, Number(cantidadPretensiones) || 1);
+      pretensionBases = Array.from({ length: cantidad }, () => basePorPretension);
       detalleBase =
-        "La pretension no cuantificada se liquida previa cuantificacion. En esta vista se usa el monto estimado ingresado.";
+        "Las pretensiones no cuantificables se liquidan sobre el 2% del monto contractual por cada pretension.";
+    } else {
+      detalleBase =
+        "Se aplica el Cuadro de Tasas 2025 a cada pretension cuantificable ingresada.";
     }
 
-    const uitValue = UIT > 0 ? baseMonto / UIT : 0;
-    const tramo = getRate(uitValue);
-    const honorariosBase = baseMonto * tramo.rate;
-    const gastosAdminBase = baseMonto * tramo.rate;
+    const items = pretensionBases.map((baseMonto, index) => {
+      const tramo = getBandForAmount(baseMonto);
+      const honorariosBase = baseMonto * tramo.rate;
+      const gastosAdmin = baseMonto * tramo.rate;
+
+      return {
+        id: index + 1,
+        baseMonto,
+        tramo,
+        honorariosBase,
+        gastosAdmin,
+      };
+    });
+
+    const totalBase = items.reduce((sum, item) => sum + item.baseMonto, 0);
+    const honorariosBase = items.reduce((sum, item) => sum + item.honorariosBase, 0);
+    const gastosAdmin = items.reduce((sum, item) => sum + item.gastosAdmin, 0);
     const multiplicadorArbitro = tipoArbitro === "tribunal" ? 2 : 1;
     const honorarios = honorariosBase * multiplicadorArbitro;
-    const gastosAdmin = gastosAdminBase;
     const subtotal = solicitud + honorarios + gastosAdmin;
-    const impuesto = incluirIgv ? subtotal * TAX_RATE : 0;
+    const impuesto = subtotal * TAX_RATE;
     const total = subtotal + impuesto;
+    const bandSummary = [...new Set(items.map((item) => item.tramo.label))];
 
     return {
-      baseMonto,
-      detalleBase,
-      uitValue,
-      tramo,
       solicitud,
+      items,
+      totalBase,
+      detalleBase,
+      honorariosBase,
+      multiplicadorArbitro,
       honorarios,
       gastosAdmin,
       subtotal,
       impuesto,
       total,
+      bandSummary,
     };
-  }, [cantidadPretensiones, incluirIgv, monto, montoContractual, pretension, tipoArbitro]);
+  }, [cantidadPretensiones, montoContractual, pretension, pretensionesTexto, tipoArbitro]);
 
   const resetCalculator = () => {
-    setMonto("");
+    setPretensionesTexto("");
     setTipoArbitro("unico");
     setPretension("cuantificada");
-    setMontoContractual(0);
+    setMontoContractual("");
     setCantidadPretensiones(1);
-    setIncluirIgv(false);
   };
 
   return (
@@ -166,8 +216,9 @@ export default function TarifarioVirtualPage() {
         <div className="tariff-hero__copy">
           <h3>Calculadora de costos arbitrales</h3>
           <p>
-            Estime gastos administrativos, honorarios arbitrales y costo total
-            segun la cuantia, tipo de arbitro y reglas aplicables del tarifario.
+            El calculo sigue el archivo <strong>Calculo 2025</strong> y la formula
+            de pretensiones no cuantificables sobre el 2% del monto contractual por
+            cada pretension. Los resultados ya incluyen IGV del 18%.
           </p>
         </div>
 
@@ -198,23 +249,7 @@ export default function TarifarioVirtualPage() {
               fullWidth
             />
 
-            {pretension !== "no_cuantificable" ? (
-              <label className="tariff-field">
-                <span>
-                  {pretension === "no_cuantificada"
-                    ? "Monto estimado para cuantificacion previa (S/)"
-                    : "Monto de la controversia (S/)"}
-                </span>
-                <input
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  value={monto}
-                  onChange={(event) => setMonto(event.target.value)}
-                  placeholder="Ingrese el monto"
-                />
-              </label>
-            ) : (
+            {pretension === "no_cuantificable" ? (
               <>
                 <label className="tariff-field">
                   <span>Monto contractual (S/)</span>
@@ -223,7 +258,7 @@ export default function TarifarioVirtualPage() {
                     min="0"
                     step="0.01"
                     value={montoContractual}
-                    onChange={(event) => setMontoContractual(Number(event.target.value))}
+                    onChange={(event) => setMontoContractual(event.target.value)}
                     placeholder="Ingrese el monto contractual"
                   />
                 </label>
@@ -239,6 +274,16 @@ export default function TarifarioVirtualPage() {
                   />
                 </label>
               </>
+            ) : (
+              <label className="tariff-field tariff-field--full">
+                <span>Montos de las pretensiones (uno por linea)</span>
+                <textarea
+                  rows="6"
+                  value={pretensionesTexto}
+                  onChange={(event) => setPretensionesTexto(event.target.value)}
+                  placeholder={"Ejemplo:\n15000\n32500.50\n78000"}
+                />
+              </label>
             )}
 
             <CustomSelect
@@ -249,25 +294,9 @@ export default function TarifarioVirtualPage() {
             />
 
             <label className="tariff-field">
-              <span>Valor referencial UIT</span>
+              <span>Valor referencial UIT 2025</span>
               <input type="text" value={formatMoney(UIT)} readOnly />
             </label>
-
-            <div className="tariff-toggle tariff-field--full">
-              <div>
-                <strong>Incluir impuesto vigente</strong>
-                <p>Se aplica una tasa referencial del {(TAX_RATE * 100).toFixed(0)}% sobre el subtotal.</p>
-              </div>
-
-              <label className="tariff-switch" aria-label="Incluir impuesto vigente">
-                <input
-                  type="checkbox"
-                  checked={incluirIgv}
-                  onChange={(event) => setIncluirIgv(event.target.checked)}
-                />
-                <span className="tariff-switch__slider" aria-hidden="true" />
-              </label>
-            </div>
 
             <div className="tariff-actions tariff-field--full">
               <button className="roster-download roster-download--button" type="button">
@@ -279,31 +308,6 @@ export default function TarifarioVirtualPage() {
               </button>
             </div>
 
-            <div className="tariff-support-row tariff-field--full">
-              <article className="tariff-support-card">
-                <i className="fa-solid fa-scale-balanced" aria-hidden="true" />
-                <div>
-                  <strong>Tramo UIT</strong>
-                  <p>La tasa se define segun el rango UIT aplicable a la controversia.</p>
-                </div>
-              </article>
-
-              <article className="tariff-support-card">
-                <i className="fa-solid fa-users" aria-hidden="true" />
-                <div>
-                  <strong>Tribunal x2</strong>
-                  <p>En colegiado arbitral, los honorarios se multiplican por 2.</p>
-                </div>
-              </article>
-
-              <article className="tariff-support-card">
-                <i className="fa-solid fa-file-pdf" aria-hidden="true" />
-                <div>
-                  <strong>Anexo I</strong>
-                  <p>La calculadora toma como base el cuadro de tasas institucional.</p>
-                </div>
-              </article>
-            </div>
           </div>
         </article>
 
@@ -315,24 +319,25 @@ export default function TarifarioVirtualPage() {
 
           <div className="tariff-stat-grid">
             <article className="tariff-stat">
-              <p>Base calculable</p>
-              <strong>{formatMoney(resultado.baseMonto)}</strong>
+              <p>Pretensiones procesadas</p>
+              <strong>{resultado.items.length}</strong>
+              <span>Ingrese una por linea para aplicar el tarifario segun cada cuantia.</span>
+            </article>
+
+            <article className="tariff-stat">
+              <p>Base liquidable total</p>
+              <strong>{formatMoney(resultado.totalBase)}</strong>
               <span>{resultado.detalleBase}</span>
             </article>
 
             <article className="tariff-stat">
-              <p>Equivalente en UIT</p>
-              <strong>{resultado.uitValue.toFixed(2)} UIT</strong>
-              <span>Valor referencial UIT: {formatMoney(UIT)}</span>
-            </article>
-
-            <article className="tariff-stat">
-              <p>Tramo aplicado</p>
-              <strong>
-                {resultado.tramo.min} a{" "}
-                {resultado.tramo.max === Number.POSITIVE_INFINITY ? "mas" : resultado.tramo.max} UIT
-              </strong>
-              <span>{(resultado.tramo.rate * 100).toFixed(2)}% de aplicacion</span>
+              <p>Tramos aplicados</p>
+              <strong>{resultado.bandSummary.length ? resultado.bandSummary.length : 0}</strong>
+              <span>
+                {resultado.bandSummary.length
+                  ? resultado.bandSummary.join(" | ")
+                  : "Aun no hay montos validos para liquidar."}
+              </span>
             </article>
           </div>
 
@@ -340,6 +345,14 @@ export default function TarifarioVirtualPage() {
             <div className="tariff-result">
               <span>Solicitud de arbitraje</span>
               <strong>{formatMoney(resultado.solicitud)}</strong>
+            </div>
+            <div className="tariff-result">
+              <span>Honorarios base</span>
+              <strong>{formatMoney(resultado.honorariosBase)}</strong>
+            </div>
+            <div className="tariff-result">
+              <span>Factor por tipo de arbitro</span>
+              <strong>x{resultado.multiplicadorArbitro}</strong>
             </div>
             <div className="tariff-result">
               <span>Honorarios arbitrales</span>
@@ -354,7 +367,7 @@ export default function TarifarioVirtualPage() {
               <strong>{formatMoney(resultado.subtotal)}</strong>
             </div>
             <div className="tariff-result">
-              <span>Impuesto</span>
+              <span>IGV</span>
               <strong>{formatMoney(resultado.impuesto)}</strong>
             </div>
           </div>
@@ -363,27 +376,33 @@ export default function TarifarioVirtualPage() {
             <p>Costo total estimado</p>
             <strong>{formatMoney(resultado.total)}</strong>
           </div>
+
+          {resultado.items.length ? (
+            <div className="tariff-note">
+              <p className="tariff-source">
+                Detalle por pretension:
+              </p>
+              <div className="tariff-breakdown">
+                {resultado.items.slice(0, 6).map((item) => (
+                  <div className="tariff-breakdown__item" key={item.id}>
+                    <strong>Pretension {item.id}</strong>
+                    <span>
+                      {formatMoney(item.baseMonto)} | {(item.tramo.rate * 100).toFixed(2)}% | {item.tramo.label}
+                    </span>
+                  </div>
+                ))}
+                {resultado.items.length > 6 ? (
+                  <div className="tariff-breakdown__item">
+                    <strong>Adicionales</strong>
+                    <span>Se han considerado {resultado.items.length - 6} pretensiones mas en el total.</span>
+                  </div>
+                ) : null}
+              </div>
+            </div>
+          ) : null}
         </aside>
       </section>
 
-      <section className="tariff-panel tariff-panel--soft">
-        <div className="tariff-panel__head">
-          <p className="page-block__eyebrow">Informacion complementaria</p>
-          <h3>Tarifario de incorporacion</h3>
-        </div>
-        <div className="tariff-note">
-          <p>
-            Las tablas de tasas por cuantia y las notas operativas fueron separadas
-            en una pagina independiente para una consulta mas clara.
-          </p>
-        </div>
-        <div className="tariff-actions" style={{ marginTop: "18px" }}>
-          <Link className="roster-download" to="/tarifario-incorporacion">
-            <i className="fa-solid fa-arrow-up-right-from-square" aria-hidden="true" />
-            Ver tarifario de incorporacion
-          </Link>
-        </div>
-      </section>
     </section>
   );
 }

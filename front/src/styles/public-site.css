@@ -29,6 +29,15 @@
   margin-inline: auto;
 }
 
+.public-main .page-block:has(.tariff-calculator-grid) {
+  padding-top: 18px;
+  padding-bottom: 28px;
+}
+
+.public-main .page-block:has(.tariff-calculator-grid) .public-shell {
+  width: min(1560px, 96%);
+}
+
 .public-header {
   position: sticky;
   top: 0;
@@ -2027,14 +2036,14 @@
   justify-content: space-between;
   align-items: flex-end;
   gap: 18px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
 }
 
 .tariff-hero__copy h3,
 .tariff-panel__head h3 {
   margin: 0;
   color: #3f5575;
-  font-size: clamp(28px, 2.8vw, 40px);
+  font-size: clamp(22px, 2vw, 30px);
   font-weight: 500;
   letter-spacing: -0.04em;
 }
@@ -2042,9 +2051,10 @@
 .tariff-hero__copy p,
 .tariff-note p,
 .tariff-source {
-  margin: 12px 0 0;
+  margin: 8px 0 0;
   color: rgba(63, 85, 117, 0.8);
-  line-height: 1.8;
+  line-height: 1.6;
+  font-size: 0.92rem;
 }
 
 .tariff-kicker {
@@ -2071,9 +2081,10 @@
 
 .tariff-calculator-grid {
   display: grid;
-  grid-template-columns: 1.18fr 0.82fr;
-  gap: 12px;
-  margin-bottom: 14px;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.72fr);
+  gap: 10px;
+  margin-bottom: 12px;
+  align-items: start;
 }
 
 .tariff-grid--notes {
@@ -2083,9 +2094,10 @@
 .tariff-panel {
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(210, 218, 229, 0.92);
-  border-radius: 24px;
-  padding: 16px;
-  box-shadow: 0 22px 48px rgba(15, 23, 42, 0.05);
+  border-radius: 20px;
+  padding: 13px;
+  box-shadow: 0 18px 36px rgba(15, 23, 42, 0.05);
+  min-width: 0;
 }
 
 .tariff-panel--soft {
@@ -2099,17 +2111,17 @@
 }
 
 .tariff-panel__head {
-  margin-bottom: 12px;
+  margin-bottom: 10px;
 }
 
 .tariff-panel__head h3 {
-  font-size: clamp(23px, 2vw, 29px);
+  font-size: clamp(19px, 1.6vw, 24px);
 }
 
 .tariff-form {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 8px;
 }
 
 .tariff-form--stack {
@@ -2122,21 +2134,22 @@
 
 .tariff-field {
   display: grid;
-  gap: 6px;
+  gap: 5px;
   color: #52627c;
-  font-size: 0.92rem;
+  font-size: 0.84rem;
   font-weight: 600;
 }
 
 .tariff-field input,
+.tariff-field textarea,
 .tariff-field select {
   width: 100%;
   border: 1px solid rgba(210, 218, 229, 0.92);
-  border-radius: 14px;
-  padding: 10px 12px;
+  border-radius: 12px;
+  padding: 8px 10px;
   background: rgba(248, 250, 252, 0.94);
   color: #384a63;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   outline: none;
 }
 
@@ -2145,9 +2158,15 @@
 }
 
 .tariff-field input:focus,
+.tariff-field textarea:focus,
 .tariff-field select:focus {
   border-color: rgba(201, 82, 43, 0.3);
   box-shadow: 0 0 0 4px rgba(201, 82, 43, 0.08);
+}
+
+.tariff-field textarea {
+  min-height: 74px;
+  resize: vertical;
 }
 
 .tariff-select {
@@ -2161,12 +2180,12 @@
   justify-content: space-between;
   gap: 12px;
   border: 1px solid rgba(210, 218, 229, 0.92);
-  border-radius: 14px;
-  padding: 10px 12px;
+  border-radius: 12px;
+  padding: 8px 10px;
   background:
     linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(245, 248, 251, 0.98));
   color: #3f5575;
-  font-size: 0.98rem;
+  font-size: 0.92rem;
   box-shadow:
     inset 0 1px 0 rgba(255, 255, 255, 0.96),
     0 10px 24px rgba(15, 23, 42, 0.03);
@@ -2250,8 +2269,8 @@
   justify-content: space-between;
   align-items: center;
   gap: 18px;
-  padding: 10px 12px;
-  border-radius: 16px;
+  padding: 8px 10px;
+  border-radius: 14px;
   background: rgba(248, 250, 252, 0.94);
   border: 1px solid rgba(210, 218, 229, 0.92);
 }
@@ -2259,14 +2278,14 @@
 .tariff-toggle strong {
   display: block;
   color: #3f5575;
-  font-size: 0.98rem;
+  font-size: 0.9rem;
   font-weight: 600;
 }
 
 .tariff-toggle p {
   margin: 4px 0 0;
   color: rgba(63, 85, 117, 0.72);
-  font-size: 0.88rem;
+  font-size: 0.8rem;
   line-height: 1.4;
 }
 
@@ -2321,7 +2340,7 @@
 .tariff-support-row {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 10px;
+  gap: 8px;
   margin-top: 2px;
 }
 
@@ -2329,9 +2348,9 @@
   display: grid;
   grid-template-columns: 32px 1fr;
   align-items: start;
-  gap: 12px;
-  padding: 12px 14px;
-  border-radius: 16px;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 14px;
   background: linear-gradient(180deg, rgba(248, 250, 252, 0.94), rgba(255, 255, 255, 0.98));
   border: 1px solid rgba(210, 218, 229, 0.92);
 }
@@ -2352,7 +2371,7 @@
 .tariff-support-card strong {
   display: block;
   color: #3f5575;
-  font-size: 0.94rem;
+  font-size: 0.88rem;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
@@ -2361,7 +2380,7 @@
   margin: 4px 0 0;
   color: rgba(63, 85, 117, 0.76);
   line-height: 1.45;
-  font-size: 0.84rem;
+  font-size: 0.78rem;
 }
 
 .roster-download--button {
@@ -2374,7 +2393,7 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 11px 16px;
+  padding: 9px 14px;
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.92);
   border: 1px solid rgba(210, 218, 229, 0.92);
@@ -2411,11 +2430,11 @@
 
 .tariff-results {
   display: grid;
-  gap: 12px;
+  gap: 8px;
 }
 
 .tariff-results--compact {
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .tariff-result {
@@ -2423,17 +2442,17 @@
   justify-content: space-between;
   align-items: center;
   gap: 12px;
-  padding: 9px 12px;
-  border-radius: 16px;
+  padding: 8px 10px;
+  border-radius: 14px;
   background: rgba(248, 250, 252, 0.94);
   border: 1px solid rgba(210, 218, 229, 0.92);
   color: #52627c;
-  font-size: 0.94rem;
+  font-size: 0.88rem;
 }
 
 .tariff-result strong {
   color: #3f5575;
-  font-size: 1rem;
+  font-size: 0.94rem;
   font-weight: 700;
 }
 
@@ -2448,12 +2467,12 @@
 
 .tariff-stat-grid {
   display: grid;
-  gap: 8px;
+  gap: 6px;
 }
 
 .tariff-stat {
-  padding: 10px 12px 11px;
-  border-radius: 16px;
+  padding: 8px 10px 9px;
+  border-radius: 14px;
   background: rgba(248, 250, 252, 0.94);
   border: 1px solid rgba(210, 218, 229, 0.92);
 }
@@ -2461,7 +2480,7 @@
 .tariff-stat p {
   margin: 0;
   color: rgba(63, 85, 117, 0.68);
-  font-size: 0.8rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
@@ -2470,7 +2489,7 @@
   display: block;
   margin-top: 4px;
   color: #3f5575;
-  font-size: 1.12rem;
+  font-size: 1rem;
   font-weight: 600;
   letter-spacing: -0.03em;
 }
@@ -2480,13 +2499,13 @@
   margin-top: 4px;
   color: rgba(63, 85, 117, 0.75);
   line-height: 1.35;
-  font-size: 0.82rem;
+  font-size: 0.76rem;
 }
 
 .tariff-total-card {
-  margin-top: 10px;
-  padding: 12px 14px;
-  border-radius: 18px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  border-radius: 16px;
   background: linear-gradient(135deg, #24354f, #3f5575);
   color: #fff;
 }
@@ -2502,15 +2521,15 @@
 .tariff-total-card strong {
   display: block;
   margin-top: 2px;
-  font-size: clamp(1.45rem, 2.3vw, 1.9rem);
+  font-size: clamp(1.2rem, 1.9vw, 1.55rem);
   font-weight: 700;
   letter-spacing: -0.04em;
 }
 
 .tariff-note {
-  margin-top: 18px;
-  padding: 16px 18px;
-  border-radius: 18px;
+  margin-top: 12px;
+  padding: 12px 14px;
+  border-radius: 16px;
   background: rgba(56, 74, 99, 0.06);
   border: 1px solid rgba(56, 74, 99, 0.1);
 }
@@ -2518,6 +2537,32 @@
 .tariff-note p,
 .tariff-source {
   margin: 0;
+}
+
+.tariff-breakdown {
+  display: grid;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.tariff-breakdown__item {
+  display: grid;
+  gap: 3px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(56, 74, 99, 0.08);
+}
+
+.tariff-breakdown__item strong {
+  color: #3f5575;
+  font-size: 0.9rem;
+}
+
+.tariff-breakdown__item span {
+  color: rgba(63, 85, 117, 0.76);
+  font-size: 0.84rem;
+  line-height: 1.4;
 }
 
 .tariff-criteria {
@@ -2881,6 +2926,12 @@
   color: rgba(226, 232, 240, 0.62);
   font-size: 0.82rem;
   text-align: center;
+}
+
+@media (max-width: 1180px) {
+  .tariff-calculator-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media (max-width: 980px) {
