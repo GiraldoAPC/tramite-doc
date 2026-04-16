@@ -538,12 +538,12 @@
 .public-modal-backdrop {
   position: fixed;
   inset: 0;
-  z-index: 60;
+  z-index: 1400;
   display: grid;
   place-items: center;
-  padding: 20px;
-  background: rgba(15, 23, 42, 0.42);
-  backdrop-filter: blur(8px);
+  padding: 0;
+  background: rgba(15, 23, 42, 0.68);
+  backdrop-filter: blur(12px);
 }
 
 .public-modal {
@@ -552,8 +552,7 @@
   overflow: auto;
   border-radius: 28px;
   padding: 24px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.98));
+  background: #ffffff;
   border: 1px solid rgba(226, 232, 240, 0.92);
   box-shadow: 0 34px 80px rgba(15, 23, 42, 0.24);
 }
@@ -2081,7 +2080,7 @@
 
 .tariff-calculator-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.72fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 10px;
   margin-bottom: 12px;
   align-items: start;
@@ -2116,6 +2115,13 @@
 
 .tariff-panel__head h3 {
   font-size: clamp(19px, 1.6vw, 24px);
+}
+
+.tariff-config-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.48fr) minmax(220px, 0.44fr);
+  gap: 14px;
+  align-items: start;
 }
 
 .tariff-form {
@@ -2165,8 +2171,16 @@
 }
 
 .tariff-field textarea {
-  min-height: 74px;
+  min-height: 98px;
   resize: vertical;
+  padding-top: 12px;
+  line-height: 1.48;
+}
+
+.tariff-field textarea::placeholder {
+  color: rgba(63, 85, 117, 0.72);
+  opacity: 1;
+  font-weight: 600;
 }
 
 .tariff-select {
@@ -2341,15 +2355,17 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
-  margin-top: 2px;
+  align-content: start;
+  width: min(100%, 400px);
+  justify-self: end;
 }
 
 .tariff-support-card {
   display: grid;
   grid-template-columns: 32px 1fr;
   align-items: start;
-  gap: 10px;
-  padding: 10px 12px;
+  gap: 12px;
+  padding: 14px 15px;
   border-radius: 14px;
   background: linear-gradient(180deg, rgba(248, 250, 252, 0.94), rgba(255, 255, 255, 0.98));
   border: 1px solid rgba(210, 218, 229, 0.92);
@@ -2371,7 +2387,7 @@
 .tariff-support-card strong {
   display: block;
   color: #3f5575;
-  font-size: 0.88rem;
+  font-size: 0.96rem;
   font-weight: 600;
   letter-spacing: -0.02em;
 }
@@ -2379,8 +2395,8 @@
 .tariff-support-card p {
   margin: 4px 0 0;
   color: rgba(63, 85, 117, 0.76);
-  line-height: 1.45;
-  font-size: 0.78rem;
+  line-height: 1.5;
+  font-size: 0.86rem;
 }
 
 .roster-download--button {
@@ -2563,6 +2579,126 @@
   color: rgba(63, 85, 117, 0.76);
   font-size: 0.84rem;
   line-height: 1.4;
+}
+
+.tariff-detail-modal {
+  width: min(780px, calc(100vw - 48px));
+  max-height: min(86vh, 760px);
+  padding: 16px 16px 14px;
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+.tariff-detail-modal .tariff-stat-grid,
+.tariff-detail-modal .tariff-results,
+.tariff-detail-modal .tariff-total-card {
+  margin-top: 8px;
+}
+
+.tariff-detail-modal__stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.tariff-detail-modal__stats .tariff-stat:last-child {
+  grid-column: 1 / -1;
+}
+
+.tariff-detail-modal__results {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 6px;
+}
+
+.tariff-detail-modal__total {
+  padding: 7px 10px;
+  border-radius: 12px;
+}
+
+.tariff-detail-modal__total p {
+  font-size: 0.68rem;
+}
+
+.tariff-detail-modal__total strong {
+  margin-top: 1px;
+  font-size: clamp(0.98rem, 1.7vw, 1.2rem);
+}
+
+.tariff-detail-modal__table {
+  margin-top: 8px;
+}
+
+.tariff-detail-modal .public-modal__head {
+  gap: 14px;
+}
+
+.tariff-detail-modal__head-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tariff-detail-modal__print {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(210, 218, 229, 0.92);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.96);
+  color: #44556f;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tariff-detail-modal .public-modal__head h2 {
+  font-size: clamp(1.18rem, 2vw, 1.55rem);
+}
+
+.tariff-detail-modal .public-modal__head p:last-child {
+  margin-top: 6px;
+  font-size: 0.82rem;
+}
+
+.tariff-detail-modal .tariff-stat {
+  padding: 7px 9px 8px;
+}
+
+.tariff-detail-modal .tariff-stat strong {
+  margin-top: 2px;
+  font-size: 0.94rem;
+}
+
+.tariff-detail-modal .tariff-stat span {
+  margin-top: 3px;
+  font-size: 0.74rem;
+  line-height: 1.3;
+}
+
+.tariff-detail-modal .tariff-result {
+  padding: 7px 10px;
+  font-size: 0.84rem;
+}
+
+.tariff-detail-modal .tariff-result strong {
+  font-size: 0.9rem;
+}
+
+.tariff-detail-modal .tariff-table th {
+  padding: 10px 12px;
+  font-size: 0.74rem;
+}
+
+.tariff-detail-modal .tariff-table td {
+  padding: 9px 12px;
+  font-size: 0.82rem;
+}
+
+.tariff-detail-modal__empty {
+  margin-top: 10px;
 }
 
 .tariff-criteria {
@@ -2928,9 +3064,238 @@
   text-align: center;
 }
 
+.secretaria-panel {
+  width: min(980px, 100%);
+  margin: 0 auto;
+  padding: 30px 34px;
+  border-radius: 28px;
+  background: rgba(255, 255, 255, 0.98);
+  border: 0;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.07);
+}
+
+.secretaria-panel__intro {
+  display: grid;
+  gap: 20px;
+}
+
+.secretaria-panel__intro p {
+  margin: 0;
+  color: rgba(47, 70, 104, 0.88);
+  font-size: 1.04rem;
+  line-height: 1.9;
+}
+
+.secretaria-team {
+  margin-top: 28px;
+  display: grid;
+  gap: 16px;
+}
+
+.secretaria-responsable {
+  margin-top: 28px;
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  padding: 20px 22px;
+  border-radius: 22px;
+  background:
+    radial-gradient(260px 120px at 0% 0%, rgba(250, 163, 26, 0.12), transparent 62%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.99), rgba(255, 255, 255, 0.98));
+  border: 1px solid rgba(248, 191, 112, 0.7);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.04);
+}
+
+.secretaria-responsable__badge {
+  width: 64px;
+  height: 64px;
+  display: grid;
+  place-items: center;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(201, 82, 43, 0.96), rgba(232, 159, 58, 0.9));
+  box-shadow:
+    0 16px 26px rgba(201, 82, 43, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.secretaria-responsable__badge i {
+  color: #fff;
+  font-size: 1.35rem;
+}
+
+.secretaria-responsable__body {
+  min-width: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.secretaria-responsable h3 {
+  margin: 0;
+  color: #314d79;
+  font-size: clamp(1.22rem, 1.8vw, 1.56rem);
+  line-height: 1.12;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+}
+
+.secretaria-responsable__role {
+  margin: 0;
+  color: rgba(63, 85, 117, 0.88);
+  font-size: 0.96rem;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.resolution-panel {
+  padding: 24px;
+  border-radius: 28px;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 252, 0.96));
+  border: 1px solid rgba(210, 218, 229, 0.92);
+  box-shadow: 0 22px 46px rgba(15, 23, 42, 0.05);
+}
+
+.resolution-panel__top {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 18px;
+}
+
+.resolution-panel__copy h3 {
+  margin: 0;
+  color: #314866;
+  font-size: clamp(1.4rem, 2.1vw, 1.9rem);
+  letter-spacing: -0.04em;
+}
+
+.resolution-panel__copy p:last-child {
+  margin: 8px 0 0;
+  color: rgba(63, 85, 117, 0.82);
+  max-width: 64ch;
+}
+
+.resolution-search {
+  min-width: min(360px, 100%);
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  align-items: center;
+  gap: 10px;
+  padding: 0 14px;
+  min-height: 50px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.94);
+  border: 1px solid rgba(210, 218, 229, 0.92);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.88);
+}
+
+.resolution-search i {
+  color: #8a2f2f;
+}
+
+.resolution-search input {
+  width: 100%;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #314866;
+  font: inherit;
+}
+
+.resolution-list {
+  display: grid;
+  gap: 14px;
+}
+
+.resolution-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: center;
+  padding: 18px 20px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.96);
+  border: 1px solid rgba(226, 232, 240, 0.92);
+  box-shadow: 0 14px 28px rgba(15, 23, 42, 0.04);
+}
+
+.resolution-card__body {
+  min-width: 0;
+}
+
+.resolution-card__eyebrow {
+  margin: 0 0 8px;
+  color: #9a3412;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.resolution-card h4 {
+  margin: 0;
+  color: #314866;
+  font-size: 1.15rem;
+  letter-spacing: -0.03em;
+}
+
+.resolution-card p {
+  margin: 8px 0 0;
+  color: rgba(63, 85, 117, 0.82);
+  line-height: 1.6;
+}
+
+.resolution-card__date {
+  margin-top: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(63, 85, 117, 0.76);
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.resolution-card__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 46px;
+  padding: 0 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: 700;
+  background: linear-gradient(135deg, #c96a2e 0%, #e08a3c 100%);
+  box-shadow: 0 12px 24px rgba(201, 106, 46, 0.18);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+}
+
+.resolution-card__cta:hover {
+  transform: translateY(-1px);
+  filter: saturate(1.04) brightness(1.02);
+  box-shadow: 0 16px 28px rgba(201, 106, 46, 0.22);
+}
+
+.resolution-empty {
+  padding: 26px 20px;
+  border-radius: 22px;
+  background: rgba(248, 250, 252, 0.92);
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  color: rgba(63, 85, 117, 0.8);
+  text-align: center;
+}
+
 @media (max-width: 1180px) {
   .tariff-calculator-grid {
     grid-template-columns: 1fr;
+  }
+
+  .tariff-config-layout {
+    grid-template-columns: minmax(0, 1fr) minmax(240px, 0.44fr);
   }
 }
 
@@ -2950,6 +3315,10 @@
   }
 
   .tariff-form {
+    grid-template-columns: 1fr;
+  }
+
+  .tariff-config-layout {
     grid-template-columns: 1fr;
   }
 
@@ -3218,6 +3587,25 @@
     border-radius: 22px;
   }
 
+  .tariff-detail-modal {
+    width: min(100vw - 20px, 100%);
+    max-height: min(82vh, 720px);
+    padding: 16px 14px 14px;
+  }
+
+  .tariff-detail-modal__head-actions {
+    justify-content: space-between;
+  }
+
+  .tariff-detail-modal__stats,
+  .tariff-detail-modal__results {
+    grid-template-columns: 1fr;
+  }
+
+  .tariff-detail-modal__stats .tariff-stat:last-child {
+    grid-column: auto;
+  }
+
   .public-modal__head {
     display: grid;
   }
@@ -3450,6 +3838,59 @@
     padding: 18px 14px;
   }
 
+  .secretaria-panel {
+    padding: 20px 18px;
+    border-radius: 22px;
+  }
+
+  .secretaria-panel__intro p {
+    font-size: 0.96rem;
+    line-height: 1.75;
+  }
+
+  .secretaria-team {
+    gap: 12px;
+  }
+
+  .resolution-panel {
+    padding: 18px;
+    border-radius: 22px;
+  }
+
+  .resolution-panel__top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .resolution-search {
+    min-width: 0;
+  }
+
+  .resolution-card {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .resolution-card__cta {
+    width: 100%;
+  }
+
+  .secretaria-responsable {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    padding: 18px;
+  }
+
+  .secretaria-responsable__badge {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+  }
+
+  .secretaria-responsable__badge i {
+    font-size: 1.2rem;
+  }
+
   .public-footer .public-shell {
     padding-top: 42px;
   }
@@ -3484,5 +3925,43 @@
 
   .public-footer__bottom p {
     text-align: left;
+  }
+}
+
+@media print {
+  html,
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background: #fff !important;
+  }
+
+  body.tariff-print-open > * {
+    display: none !important;
+  }
+
+  body.tariff-print-open > .public-modal-backdrop {
+    display: block !important;
+    position: static !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    background: #fff !important;
+    backdrop-filter: none !important;
+  }
+
+  body.tariff-print-open > .public-modal-backdrop .tariff-detail-modal {
+    width: 100% !important;
+    max-height: none !important;
+    overflow: visible !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  body.tariff-print-open .tariff-detail-modal__print,
+  body.tariff-print-open .public-modal__close {
+    display: none !important;
   }
 }
