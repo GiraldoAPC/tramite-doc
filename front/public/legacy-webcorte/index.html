@@ -1261,6 +1261,14 @@
             border-color: rgba(56, 74, 99, .16);
         }
 
+        button.resource-card {
+            width: 100%;
+            border: 1px solid rgba(148, 163, 184, .18);
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+        }
+
         .resource-card__icon {
             width: 54px;
             height: 54px;
@@ -1307,6 +1315,162 @@
             letter-spacing: .08em;
             text-transform: uppercase;
             color: rgba(154, 52, 18, .86);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            z-index: 80;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity .34s ease, visibility .34s ease;
+        }
+
+        .modal.is-open,
+        .modal.is-closing {
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .modal.is-open {
+            opacity: 1;
+        }
+
+        .modal__backdrop {
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 6, 23, .58);
+            backdrop-filter: blur(6px);
+            opacity: 0;
+            transition: opacity .42s ease;
+        }
+
+        .modal__dialog {
+            position: relative;
+            width: min(760px, 100%);
+            max-height: min(86vh, 760px);
+            background: rgba(255, 255, 255, .98);
+            border: 1px solid rgba(210, 218, 229, .96);
+            border-radius: 28px;
+            box-shadow: 0 32px 68px rgba(15, 23, 42, .18);
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(28px) scale(.975);
+            transition: opacity .42s cubic-bezier(.22, 1, .36, 1), transform .42s cubic-bezier(.22, 1, .36, 1);
+        }
+
+        .modal.is-open .modal__backdrop,
+        .modal.is-closing .modal__backdrop {
+            opacity: 1;
+        }
+
+        .modal.is-open .modal__dialog {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .modal.is-closing .modal__backdrop {
+            opacity: 0;
+        }
+
+        .modal.is-closing .modal__dialog {
+            opacity: 0;
+            transform: translateY(18px) scale(.985);
+        }
+
+        .modal__head {
+            padding: 24px 28px 14px;
+            border-bottom: 1px solid rgba(226, 232, 240, .84);
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 18px;
+        }
+
+        .modal__eyebrow {
+            margin: 0 0 8px;
+            color: #a85c0d;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+
+        .modal__head h3 {
+            margin: 0;
+            color: #20324f;
+            font-size: clamp(24px, 2.5vw, 32px);
+            font-weight: 500;
+            letter-spacing: -.04em;
+        }
+
+        .modal__close {
+            width: 42px;
+            height: 42px;
+            border-radius: 14px;
+            border: 1px solid rgba(210, 218, 229, .92);
+            background: rgba(248, 250, 252, .92);
+            color: #20324f;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        .modal__body {
+            padding: 24px 28px 28px;
+            overflow-y: auto;
+        }
+
+        .modal__body>p {
+            margin: 0;
+            color: rgba(63, 85, 117, .82);
+            line-height: 1.75;
+            font-size: 16px;
+        }
+
+        .modal__downloads {
+            margin-top: 22px;
+            display: grid;
+            gap: 12px;
+        }
+
+        .modal__download {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 14px;
+            align-items: center;
+            padding: 14px 16px;
+            border-radius: 18px;
+            border: 1px solid rgba(210, 218, 229, .92);
+            background: rgba(248, 250, 252, .92);
+            color: #20324f;
+            text-decoration: none;
+            transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+        }
+
+        .modal__download:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 16px 28px rgba(15, 23, 42, .06);
+            border-color: rgba(231, 144, 24, .20);
+        }
+
+        .modal__download strong {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.45;
+        }
+
+        .modal__download span {
+            color: rgba(154, 52, 18, .86);
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: .08em;
+            text-transform: uppercase;
         }
 
         .certs {
@@ -1909,7 +2073,6 @@
         <div class="container">
             <div class="section-head reveal-on-scroll">
                 <div>
-                    <h2>Enlaces institucionales</h2>
                     <p>Accesos directos a documentos, directorios y servicios de consulta de la Corte.</p>
                 </div>
             </div>
@@ -1927,7 +2090,7 @@
                 <a class="resource-card reveal-on-scroll" href="/reglamentos-directivos" target="_top">
                     <span class="resource-card__icon" aria-hidden="true"><i class="fa-solid fa-file-lines"></i></span>
                     <div class="resource-card__body">
-                        <h3>Reglamentos directivos</h3>
+                        <h3>Reglamento</h3>
                         <p>Accede al encabezado base para reglamentos, directivas y normativa institucional.</p>
                     </div>
                     <span class="resource-card__meta">Ver página <i class="fa-solid fa-arrow-right"></i></span>
@@ -1942,14 +2105,14 @@
                     <span class="resource-card__meta">Ver página <i class="fa-solid fa-arrow-right"></i></span>
                 </a>
 
-                <a class="resource-card reveal-on-scroll" href="/tarifario-incorporacion" target="_top">
+                <button class="resource-card reveal-on-scroll" type="button" data-modal-open="modal-incorporacion">
                     <span class="resource-card__icon" aria-hidden="true"><i class="fa-solid fa-file-circle-plus"></i></span>
                     <div class="resource-card__body">
-                        <h3>Tarifario de incorporación</h3>
-                        <p>Base inicial para publicar costos, criterios y alcances del proceso de incorporación.</p>
+                        <h3>Solicitud de incorporación</h3>
+                        <p>Accede al modal institucional con los formatos y documentos requeridos para el proceso de incorporación.</p>
                     </div>
-                    <span class="resource-card__meta">Ver página <i class="fa-solid fa-arrow-right"></i></span>
-                </a>
+                    <span class="resource-card__meta">Abrir modal <i class="fa-solid fa-arrow-right"></i></span>
+                </button>
 
                 <a class="resource-card reveal-on-scroll" href="/comunicados" target="_top">
                     <span class="resource-card__icon" aria-hidden="true"><i class="fa-solid fa-bullhorn"></i></span>
@@ -1962,6 +2125,36 @@
             </div>
         </div>
     </section>
+
+    <div class="modal" id="modal-incorporacion" aria-hidden="true">
+        <div class="modal__backdrop" data-modal-close></div>
+        <div class="modal__dialog">
+            <div class="modal__head">
+                <div>
+                    <p class="modal__eyebrow">Servicio institucional</p>
+                    <h3>Solicitud de incorporacion</h3>
+                </div>
+                <button class="modal__close" type="button" aria-label="Cerrar" data-modal-close>x</button>
+            </div>
+            <div class="modal__body">
+                <p>La solicitud de incorporacion permite iniciar el proceso de evaluacion institucional conforme a los criterios y lineamientos vigentes de la Corte.</p>
+                <div class="modal__downloads">
+                    <a class="modal__download" href="/documentos/solitud-incoproracion/DIRECTIVA%20-%20ARBITROS-CSAA.pdf" target="_blank" rel="noopener noreferrer">
+                        <strong>Directiva - Arbitros CSAA</strong>
+                        <span>PDF</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/solitud-incoproracion/FO-ARB-01%20Solicitud%20de%20Incorporaci%C3%B3n%20-%20Registro%20de%20%C3%81rbitros%20V.01.docx" target="_blank" rel="noopener noreferrer">
+                        <strong>FO-ARB-01 Solicitud de Incorporacion - Registro de Arbitros V.01</strong>
+                        <span>DOCX</span>
+                    </a>
+                    <a class="modal__download" href="/documentos/solitud-incoproracion/FO-ARB-03%20Declaraci%C3%B3n%20Jurada%20-%20Registro%20de%20%C3%81rbitros%20V.01.docx" target="_blank" rel="noopener noreferrer">
+                        <strong>FO-ARB-03 Declaracion Jurada - Registro de Arbitros V.01</strong>
+                        <span>DOCX</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <section id="certificaciones" class="certs">
         <div class="container">
@@ -2241,6 +2434,45 @@
                 observer.observe(item);
             });
         })();
+
+        const openModal = (modal) => {
+            if (!modal) return;
+            modal.classList.remove("is-closing");
+            modal.classList.add("is-open");
+            modal.setAttribute("aria-hidden", "false");
+            document.body.style.overflow = "hidden";
+        };
+
+        const closeModal = (modal) => {
+            if (!modal) return;
+            modal.classList.remove("is-open");
+            modal.classList.add("is-closing");
+            window.setTimeout(() => {
+                modal.classList.remove("is-closing");
+                modal.setAttribute("aria-hidden", "true");
+                if (!document.querySelector(".modal.is-open")) {
+                    document.body.style.overflow = "";
+                }
+            }, 340);
+        };
+
+        document.querySelectorAll("[data-modal-open]").forEach((trigger) => {
+            trigger.addEventListener("click", () => {
+                const id = trigger.getAttribute("data-modal-open");
+                openModal(document.getElementById(id));
+            });
+        });
+
+        document.querySelectorAll(".modal").forEach((modal) => {
+            modal.querySelectorAll("[data-modal-close]").forEach((node) => {
+                node.addEventListener("click", () => closeModal(modal));
+            });
+        });
+
+        document.addEventListener("keydown", (event) => {
+            if (event.key !== "Escape") return;
+            document.querySelectorAll(".modal.is-open").forEach((modal) => closeModal(modal));
+        });
     </script>
 
 

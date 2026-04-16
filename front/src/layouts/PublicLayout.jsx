@@ -9,6 +9,7 @@ const navItems = [
     children: [
       { to: "/organizacion", label: "Consejo superior", icon: "fa-solid fa-sitemap" },
       { to: "/secretaria-general", label: "Secretaria general", icon: "fa-solid fa-building-user" },
+      { to: "/secretaria-arbitral", label: "Secretaria arbitral", icon: "fa-solid fa-users-gear" },
       { to: "/documentos/institucionales/Licencia%20de%20funcionamiento.pdf", label: "Licencia de funcionamiento", icon: "fa-solid fa-file-circle-plus" },
     ],
   },
@@ -16,11 +17,11 @@ const navItems = [
     to: "/arbitraje",
     label: "Arbitraje",
     children: [
-      { to: "/arbitraje", label: "Enlaces arbitrales", icon: "fa-solid fa-link" },
+      { to: "/arbitraje", label: "Informacion arbitral", icon: "fa-solid fa-link" },
       { to: "/nomina-arbitros", label: "Nomina de Arbitros", icon: "fa-solid fa-scale-balanced" },
       { to: "/reglamentos-directivos", label: "Reglamentos", icon: "fa-solid fa-book-bookmark" },
       { to: "/tarifario-virtual", label: "Tarifario virtual", icon: "fa-solid fa-calculator" },
-      { to: "/tarifario-incorporacion", label: "Tarifario de incorporacion", icon: "fa-solid fa-file-circle-plus" },
+      { to: "/resoluciones", label: "Resoluciones", icon: "fa-solid fa-folder-open" },
       { to: "/comunicados", label: "Comunicados", icon: "fa-solid fa-bullhorn" },
     ],
   },
@@ -44,6 +45,14 @@ const pageBanners = {
     subtitle: "Gestipón administrativa y soporte institucional de la Corte de Arbitraje",
     image: "/img/organizacion.jpg",
     icon: "fa-solid fa-building-user",
+    cutColor: "#f3f4f6",
+  },
+  "/secretaria-arbitral": {
+    crumbCurrent: "Secretaria arbitral",
+    title: "SECRETARIA ARBITRAL",
+    subtitle: "Secretarios(as) arbitrales y personal administrativo de apoyo",
+    image: "/img/organizacion.jpg",
+    icon: "fa-solid fa-users-gear",
     cutColor: "#f3f4f6",
   },
   "/arbitraje": {
@@ -100,6 +109,14 @@ const pageBanners = {
     subtitle: "Calculadora y estructura base para servicios arbitrales",
     image: "/img/arbitraje.jpg",
     icon: "fa-solid fa-calculator",
+    cutColor: "#f3f4f6",
+  },
+  "/resoluciones": {
+    crumbCurrent: "Resoluciones",
+    title: "RESOLUCIONES",
+    subtitle: "Resoluciones publicadas para consulta y descarga",
+    image: "/img/arbitraje.jpg",
+    icon: "fa-solid fa-folder-open",
     cutColor: "#f3f4f6",
   },
   "/tarifario-incorporacion": {

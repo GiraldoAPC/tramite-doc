@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { createPortal } from "react-dom";
 
 const UIT = 5350;
 const TAX_RATE = 0.18;
@@ -135,6 +136,7 @@ export default function TarifarioVirtualPage() {
   const [pretension, setPretension] = useState("cuantificada");
   const [montoContractual, setMontoContractual] = useState("");
   const [cantidadPretensiones, setCantidadPretensiones] = useState(1);
+  const [resultadoAbierto, setResultadoAbierto] = useState(false);
 
   const pretensionOptions = [
     { value: "cuantificada", label: "Pretension cuantificada" },
@@ -208,7 +210,30 @@ export default function TarifarioVirtualPage() {
     setPretension("cuantificada");
     setMontoContractual("");
     setCantidadPretensiones(1);
+    setResultadoAbierto(false);
   };
+
+  useEffect(() => {
+    if (!resultadoAbierto) return undefined;
+
+    const handleEscape = (event) => {
+      if (event.key === "Escape") setResultadoAbierto(false);
+    };
+
+    document.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.removeEventListener("keydown", handleEscape);
+    };
+  }, [resultadoAbierto]);
+
+  useEffect(() => {
+    document.body.classList.toggle("tariff-print-open", resultadoAbierto);
+
+    return () => {
+      document.body.classList.remove("tariff-print-open");
+    };
+  }, [resultadoAbierto]);
 
   return (
     <section className="public-shell page-block">
@@ -240,169 +265,243 @@ export default function TarifarioVirtualPage() {
             <h3>Configuracion de la liquidacion</h3>
           </div>
 
-          <div className="tariff-form tariff-form--stack">
-            <CustomSelect
-              label="Tipo de pretension"
-              value={pretension}
-              options={pretensionOptions}
-              onChange={setPretension}
-              fullWidth
-            />
+          <div className="tariff-config-layout">
+            <div className="tariff-form tariff-form--stack">
+              <CustomSelect
+                label="Tipo de pretension"
+                value={pretension}
+                options={pretensionOptions}
+                onChange={setPretension}
+                fullWidth
+              />
 
-            {pretension === "no_cuantificable" ? (
-              <>
-                <label className="tariff-field">
-                  <span>Monto contractual (S/)</span>
-                  <input
-                    type="number"
-                    min="0"
-                    step="0.01"
-                    value={montoContractual}
-                    onChange={(event) => setMontoContractual(event.target.value)}
-                    placeholder="Ingrese el monto contractual"
+              {pretension === "no_cuantificable" ? (
+                <>
+                  <label className="tariff-field">
+                    <span>Monto contractual (S/)</span>
+                    <input
+                      type="number"
+                      min="0"
+                      step="0.01"
+                      value={montoContractual}
+                      onChange={(event) => setMontoContractual(event.target.value)}
+                      placeholder="Ingrese el monto contractual"
+                    />
+                  </label>
+
+                  <label className="tariff-field">
+                    <span>Cantidad de pretensiones</span>
+                    <input
+                      type="number"
+                      min="1"
+                      step="1"
+                      value={cantidadPretensiones}
+                      onChange={(event) => setCantidadPretensiones(Number(event.target.value))}
+                    />
+                  </label>
+                </>
+              ) : (
+                <label className="tariff-field tariff-field--full">
+                  <span>Montos de las pretensiones (uno por linea)</span>
+                  <textarea
+                    rows="6"
+                    value={pretensionesTexto}
+                    onChange={(event) => setPretensionesTexto(event.target.value)}
+                    placeholder={"Ejemplo:\n15000\n32500.50\n78000"}
                   />
                 </label>
+              )}
 
-                <label className="tariff-field">
-                  <span>Cantidad de pretensiones</span>
-                  <input
-                    type="number"
-                    min="1"
-                    step="1"
-                    value={cantidadPretensiones}
-                    onChange={(event) => setCantidadPretensiones(Number(event.target.value))}
-                  />
-                </label>
-              </>
-            ) : (
-              <label className="tariff-field tariff-field--full">
-                <span>Montos de las pretensiones (uno por linea)</span>
-                <textarea
-                  rows="6"
-                  value={pretensionesTexto}
-                  onChange={(event) => setPretensionesTexto(event.target.value)}
-                  placeholder={"Ejemplo:\n15000\n32500.50\n78000"}
-                />
+              <CustomSelect
+                label="Tipo de arbitro"
+                value={tipoArbitro}
+                options={arbitroOptions}
+                onChange={setTipoArbitro}
+              />
+
+              <label className="tariff-field">
+                <span>Valor referencial UIT 2025</span>
+                <input type="text" value={formatMoney(UIT)} readOnly />
               </label>
-            )}
 
-            <CustomSelect
-              label="Tipo de arbitro"
-              value={tipoArbitro}
-              options={arbitroOptions}
-              onChange={setTipoArbitro}
-            />
-
-            <label className="tariff-field">
-              <span>Valor referencial UIT 2025</span>
-              <input type="text" value={formatMoney(UIT)} readOnly />
-            </label>
-
-            <div className="tariff-actions tariff-field--full">
-              <button className="roster-download roster-download--button" type="button">
-                <i className="fa-solid fa-calculator" aria-hidden="true" />
-                Calculo actualizado
-              </button>
-              <button className="tariff-clear" type="button" onClick={resetCalculator}>
-                Limpiar
-              </button>
-            </div>
-
-          </div>
-        </article>
-
-        <aside className="tariff-panel tariff-panel--accent">
-          <div className="tariff-panel__head">
-            <p className="page-block__eyebrow">Resumen del calculo</p>
-            <h3>Resultado referencial</h3>
-          </div>
-
-          <div className="tariff-stat-grid">
-            <article className="tariff-stat">
-              <p>Pretensiones procesadas</p>
-              <strong>{resultado.items.length}</strong>
-              <span>Ingrese una por linea para aplicar el tarifario segun cada cuantia.</span>
-            </article>
-
-            <article className="tariff-stat">
-              <p>Base liquidable total</p>
-              <strong>{formatMoney(resultado.totalBase)}</strong>
-              <span>{resultado.detalleBase}</span>
-            </article>
-
-            <article className="tariff-stat">
-              <p>Tramos aplicados</p>
-              <strong>{resultado.bandSummary.length ? resultado.bandSummary.length : 0}</strong>
-              <span>
-                {resultado.bandSummary.length
-                  ? resultado.bandSummary.join(" | ")
-                  : "Aun no hay montos validos para liquidar."}
-              </span>
-            </article>
-          </div>
-
-          <div className="tariff-results tariff-results--compact">
-            <div className="tariff-result">
-              <span>Solicitud de arbitraje</span>
-              <strong>{formatMoney(resultado.solicitud)}</strong>
-            </div>
-            <div className="tariff-result">
-              <span>Honorarios base</span>
-              <strong>{formatMoney(resultado.honorariosBase)}</strong>
-            </div>
-            <div className="tariff-result">
-              <span>Factor por tipo de arbitro</span>
-              <strong>x{resultado.multiplicadorArbitro}</strong>
-            </div>
-            <div className="tariff-result">
-              <span>Honorarios arbitrales</span>
-              <strong>{formatMoney(resultado.honorarios)}</strong>
-            </div>
-            <div className="tariff-result">
-              <span>Gastos administrativos</span>
-              <strong>{formatMoney(resultado.gastosAdmin)}</strong>
-            </div>
-            <div className="tariff-result">
-              <span>Subtotal</span>
-              <strong>{formatMoney(resultado.subtotal)}</strong>
-            </div>
-            <div className="tariff-result">
-              <span>IGV</span>
-              <strong>{formatMoney(resultado.impuesto)}</strong>
-            </div>
-          </div>
-
-          <div className="tariff-total-card">
-            <p>Costo total estimado</p>
-            <strong>{formatMoney(resultado.total)}</strong>
-          </div>
-
-          {resultado.items.length ? (
-            <div className="tariff-note">
-              <p className="tariff-source">
-                Detalle por pretension:
-              </p>
-              <div className="tariff-breakdown">
-                {resultado.items.slice(0, 6).map((item) => (
-                  <div className="tariff-breakdown__item" key={item.id}>
-                    <strong>Pretension {item.id}</strong>
-                    <span>
-                      {formatMoney(item.baseMonto)} | {(item.tramo.rate * 100).toFixed(2)}% | {item.tramo.label}
-                    </span>
-                  </div>
-                ))}
-                {resultado.items.length > 6 ? (
-                  <div className="tariff-breakdown__item">
-                    <strong>Adicionales</strong>
-                    <span>Se han considerado {resultado.items.length - 6} pretensiones mas en el total.</span>
-                  </div>
-                ) : null}
+              <div className="tariff-actions tariff-field--full">
+                <button
+                  className="roster-download roster-download--button"
+                  type="button"
+                  onClick={() => setResultadoAbierto(true)}
+                >
+                  <i className="fa-solid fa-calculator" aria-hidden="true" />
+                  Calculo actualizado
+                </button>
+                <button className="tariff-clear" type="button" onClick={resetCalculator}>
+                  Limpiar
+                </button>
               </div>
             </div>
-          ) : null}
-        </aside>
+
+            <aside className="tariff-support-row">
+              <article className="tariff-support-card">
+                <i className="fa-solid fa-circle-info" aria-hidden="true" />
+                <div>
+                  <strong>Indicaciones de uso</strong>
+                  <p>
+                    Ingrese un monto por linea si la pretension es cuantificada. Si no lo es,
+                    use el monto contractual y la cantidad de pretensiones para aplicar el 2%.
+                  </p>
+                </div>
+              </article>
+              <article className="tariff-support-card">
+                <i className="fa-solid fa-table-list" aria-hidden="true" />
+                <div>
+                  <strong>Resultado en ventana emergente</strong>
+                  <p>
+                    Al presionar Calculo actualizado se abrira un modal con el resumen del
+                    calculo y el detalle por pretension.
+                  </p>
+                </div>
+              </article>
+            </aside>
+          </div>
+        </article>
       </section>
 
+      {resultadoAbierto
+        ? createPortal(
+            <div
+              className="public-modal-backdrop"
+              role="presentation"
+              onClick={() => setResultadoAbierto(false)}
+            >
+              <section
+                className="public-modal tariff-detail-modal"
+                role="dialog"
+                aria-modal="true"
+                aria-labelledby="tariff-result-title"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className="public-modal__head">
+                  <div>
+                    <p className="public-modal__eyebrow">Resumen del calculo</p>
+                    <h2 id="tariff-result-title">Resultado referencial</h2>
+                    <p>
+                      Revise el costo estimado, los conceptos liquidados y el detalle aplicado
+                      a cada pretension procesada.
+                    </p>
+                  </div>
+
+                  <div className="tariff-detail-modal__head-actions">
+                    <button
+                      className="tariff-detail-modal__print"
+                      type="button"
+                      onClick={() => window.print()}
+                    >
+                      <i className="fa-solid fa-print" aria-hidden="true" />
+                      Imprimir
+                    </button>
+                    <button
+                      className="public-modal__close"
+                      type="button"
+                      onClick={() => setResultadoAbierto(false)}
+                      aria-label="Cerrar resultado"
+                    >
+                      <i className="fa-solid fa-xmark" aria-hidden="true" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="tariff-stat-grid tariff-detail-modal__stats">
+                  <article className="tariff-stat">
+                    <p>Pretensiones procesadas</p>
+                    <strong>{resultado.items.length}</strong>
+                    <span>Ingrese una por linea para aplicar el tarifario segun cada cuantia.</span>
+                  </article>
+
+                  <article className="tariff-stat">
+                    <p>Base liquidable total</p>
+                    <strong>{formatMoney(resultado.totalBase)}</strong>
+                    <span>{resultado.detalleBase}</span>
+                  </article>
+
+                  <article className="tariff-stat">
+                    <p>Tramos aplicados</p>
+                    <strong>{resultado.bandSummary.length ? resultado.bandSummary.length : 0}</strong>
+                    <span>
+                      {resultado.bandSummary.length
+                        ? resultado.bandSummary.join(" | ")
+                        : "Aun no hay montos validos para liquidar."}
+                    </span>
+                  </article>
+                </div>
+
+                <div className="tariff-results tariff-results--compact tariff-detail-modal__results">
+                  <div className="tariff-result">
+                    <span>Solicitud de arbitraje</span>
+                    <strong>{formatMoney(resultado.solicitud)}</strong>
+                  </div>
+                  <div className="tariff-result">
+                    <span>Honorarios base</span>
+                    <strong>{formatMoney(resultado.honorariosBase)}</strong>
+                  </div>
+                  <div className="tariff-result">
+                    <span>Factor por tipo de arbitro</span>
+                    <strong>x{resultado.multiplicadorArbitro}</strong>
+                  </div>
+                  <div className="tariff-result">
+                    <span>Honorarios arbitrales</span>
+                    <strong>{formatMoney(resultado.honorarios)}</strong>
+                  </div>
+                  <div className="tariff-result">
+                    <span>Gastos administrativos</span>
+                    <strong>{formatMoney(resultado.gastosAdmin)}</strong>
+                  </div>
+                  <div className="tariff-result">
+                    <span>Subtotal</span>
+                    <strong>{formatMoney(resultado.subtotal)}</strong>
+                  </div>
+                  <div className="tariff-result">
+                    <span>IGV</span>
+                    <strong>{formatMoney(resultado.impuesto)}</strong>
+                  </div>
+                </div>
+
+                <div className="tariff-total-card tariff-detail-modal__total">
+                  <p>Costo total estimado</p>
+                  <strong>{formatMoney(resultado.total)}</strong>
+                </div>
+
+                {resultado.items.length ? (
+                  <div className="tariff-table-wrap tariff-detail-modal__table">
+                    <table className="tariff-table">
+                      <thead>
+                        <tr>
+                          <th>Pretension</th>
+                          <th>Base liquidable</th>
+                          <th>Tasa</th>
+                          <th>Tramo aplicado</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {resultado.items.map((item) => (
+                          <tr key={item.id}>
+                            <td>{item.id}</td>
+                            <td>{formatMoney(item.baseMonto)}</td>
+                            <td>{(item.tramo.rate * 100).toFixed(2)}%</td>
+                            <td>{item.tramo.label}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : (
+                  <div className="tariff-note tariff-detail-modal__empty">
+                    <p className="tariff-source">Todavia no hay pretensiones validas para mostrar en el detalle.</p>
+                  </div>
+                )}
+              </section>
+            </div>,
+            document.body,
+          )
+        : null}
     </section>
   );
 }
