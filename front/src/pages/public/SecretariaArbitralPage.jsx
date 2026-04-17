@@ -4,8 +4,8 @@ export default function SecretariaArbitralPage() {
       <section className="secretaria-panel">
         <div className="secretaria-panel__intro">
           <p>
-            La Secretaria General cuenta con secretarios(as) arbitrales y personal
-            administrativo, quienes son los encargados de asistir a los arbitros
+            La Secretaría General cuenta con secretarios(as) arbitrales y personal
+            administrativo, quienes son los encargados de asistir a los árbitros
             de los procesos arbitrales.
           </p>
         </div>
@@ -17,7 +17,7 @@ export default function SecretariaArbitralPage() {
             </div>
 
             <div className="secretaria-responsable__body">
-              <h3>Dra. Maria del Carmen Segura Cordova</h3>
+              <h3>Dra. María del Carmen Segura Córdova</h3>
             </div>
           </article>
 
@@ -27,7 +27,7 @@ export default function SecretariaArbitralPage() {
             </div>
 
             <div className="secretaria-responsable__body">
-              <h3>Angela Daniel Montalvo Orellana</h3>
+              <h3>Ángela Daniel Montalvo Orellana</h3>
             </div>
           </article>
         </section>

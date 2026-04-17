@@ -3,25 +3,25 @@ import { useMemo, useState } from "react";
 const resoluciones = [
   {
     id: 1,
-    titulo: "Resolucion Administrativa 001-2026-CSA",
+    titulo: "Resolución Administrativa 001-2026-CSA",
     descripcion:
-      "Disposiciones administrativas emitidas por la Corte para la gestion institucional y operativa.",
+      "Disposiciones administrativas emitidas por la Corte para la gestión institucional y operativa.",
     fecha: "2026-01-15",
     href: "/documentos/resoluciones/Resolucion-001-2026-CSA.pdf",
   },
   {
     id: 2,
-    titulo: "Resolucion Administrativa 002-2026-CSA",
+    titulo: "Resolución Administrativa 002-2026-CSA",
     descripcion:
-      "Lineamientos complementarios para la organizacion y soporte de actuaciones arbitrales.",
+      "Lineamientos complementarios para la organización y soporte de actuaciones arbitrales.",
     fecha: "2026-02-28",
     href: "/documentos/resoluciones/Resolucion-002-2026-CSA.pdf",
   },
   {
     id: 3,
-    titulo: "Resolucion Administrativa 003-2026-CSA",
+    titulo: "Resolución Administrativa 003-2026-CSA",
     descripcion:
-      "Criterios internos para la tramitacion documentaria y seguimiento de expedientes.",
+      "Criterios internos para la tramitación documentaria y seguimiento de expedientes.",
     fecha: "2026-04-04",
     href: "/documentos/resoluciones/Resolucion-003-2026-CSA.pdf",
   },
@@ -58,7 +58,7 @@ export default function ResolucionesPage() {
               type="search"
               value={busqueda}
               onChange={(event) => setBusqueda(event.target.value)}
-              placeholder="Buscar por nombre, descripcion o fecha"
+              placeholder="Buscar por nombre, descripción o fecha"
             />
           </div>
         </div>
@@ -68,7 +68,7 @@ export default function ResolucionesPage() {
             resultados.map((item) => (
               <article key={item.id} className="resolution-card">
                 <div className="resolution-card__body">
-                  <p className="resolution-card__eyebrow">Resolucion</p>
+                  <p className="resolution-card__eyebrow">Resolución</p>
                   <h4>{item.titulo}</h4>
                   <p>{item.descripcion}</p>
                   <span className="resolution-card__date">
@@ -90,7 +90,7 @@ export default function ResolucionesPage() {
             ))
           ) : (
             <div className="resolution-empty">
-              No se encontraron resoluciones con ese criterio de busqueda.
+              No se encontraron resoluciones con ese criterio de búsqueda.
             </div>
           )}
         </div>
